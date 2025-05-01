@@ -5,12 +5,16 @@ import { Teacher } from './teachers.model';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Qual } from 'src/quals/quals.model';
 import { QualsModule } from 'src/quals/quals.module';
+import { Group } from 'src/groups/groups.model';
+import { LectureEvent } from 'src/lecture_events/lecture_events.model';
+import { TeacherQuals } from 'src/quals/teacher-quals.model';
+import { User } from 'src/users/users.model';
 
 @Module({
   controllers: [TeachersController],
   providers: [TeachersService],
   imports: [
-    SequelizeModule.forFeature([Teacher, Qual]),
+    SequelizeModule.forFeature([Teacher, Qual, Group, LectureEvent, TeacherQuals, User]),
     QualsModule
   ]
 })

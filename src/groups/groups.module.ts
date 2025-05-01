@@ -3,12 +3,17 @@ import { GroupsService } from './groups.service';
 import { GroupsController } from './groups.controller';
 import { Group } from './groups.model';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { Category } from 'src/categories/categories.model';
+import { LectureEvent } from 'src/lecture_events/lecture_events.model';
+import { Student } from 'src/students/students.model';
+import { Teacher } from 'src/teachers/teachers.model';
+import { TestEvent } from 'src/test_events/test_events.model';
 
 @Module({
   controllers: [GroupsController],
   providers: [GroupsService],
   imports: [
-    SequelizeModule.forFeature([Group])
+    SequelizeModule.forFeature([Group, Category, LectureEvent, Student, Teacher, TestEvent])
   ]
 })
 export class GroupsModule {}

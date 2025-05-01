@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
+import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
+import { Group } from "src/groups/groups.model";
+import { LectureEvent } from "src/lecture_events/lecture_events.model";
 import { Qual } from "src/quals/quals.model";
 import { TeacherQuals } from "src/quals/teacher-quals.model";
 import { User } from "src/users/users.model";
@@ -8,10 +10,9 @@ interface TeacherCreateAttrs{
   fullName: string,
   phoneNumber: string,
   dateOfEmployment: Date,
-  // idNumber: string
 }
 
-enum TeacherStatus {
+export enum TeacherStatus {
   ACTIVE = 'Активен',
   ON_LEAVE = 'В отпуске',
   SICK_LEAVE = 'На больничном',
@@ -25,12 +26,13 @@ export class Teacher extends Model<Teacher, TeacherCreateAttrs>{
   @Column({type: DataType.INTEGER, unique: true, primaryKey: true, autoIncrement: true})
   declare id: number;
   
+  @ApiProperty({example: '1', description: 'Уникальный идентификатор пользователя'})
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER, allowNull: false })
   userId: number;
 
   @BelongsTo(() => User)
-  user: number;
+  user: User;
   
   @ApiProperty({example: 'Иванов Иван Иванович', description: 'ФИО'})
   @Column({type: DataType.STRING, allowNull: false})
@@ -40,21 +42,9 @@ export class Teacher extends Model<Teacher, TeacherCreateAttrs>{
   @Column({type: DataType.STRING, allowNull: false})
   phoneNumber: string;
 
-  @ApiProperty({example: 'ivanov@mail.ru', description: 'Электронная почта'})
-  @Column({type: DataType.STRING, unique: true})
-  email: string;
-
   @ApiProperty({example: '2025-04-28', description: 'Дата приёма на работу'})
   @Column({type: DataType.DATEONLY, allowNull: false})
   dateOfEmployment: Date;
-
-  // @ApiProperty({example: '123457890', description: 'Пароль'})
-  // @Column({type: DataType.STRING})
-  // password: string;
-
-  // @ApiProperty({example: '123457890', description: 'Идентификационный номер паспорта'})
-  // @Column({type: DataType.STRING, unique: true})
-  // idNumber: string;
 
   @ApiProperty({example: 'В отпуске', description: 'Статус'})
   @Column({type: DataType.ENUM(...Object.values(TeacherStatus)), defaultValue: TeacherStatus.ACTIVE, allowNull: false})
@@ -62,4 +52,10 @@ export class Teacher extends Model<Teacher, TeacherCreateAttrs>{
 
   @BelongsToMany(() => Qual, () => TeacherQuals)
   quals: Qual[];
+
+  @HasMany(() => Group)
+  groups: Group[];
+
+  @HasMany(() => LectureEvent)
+  lectureLessons: LectureEvent[];
 }

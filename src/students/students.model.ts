@@ -1,17 +1,21 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Table, Model, DataType, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
+import { Table, Model, DataType, Column, ForeignKey, BelongsTo, BelongsToMany, HasMany } from "sequelize-typescript";
+import { DrivingEvent } from "src/driving_events/driving_events.model";
 import { Group } from "src/groups/groups.model";
 import { Instructor } from "src/instructors/instructors.model";
+import { LectureEvent } from "src/lecture_events/lecture_events.model";
+import { StudentLecture } from "src/lecture_events/student-lectures.model";
+import { TestEvent } from "src/test_events/test_events.model";
+import { TestResult } from "src/tests/test-results.model";
+import { User } from "src/users/users.model";
 
 interface StudentCreationAttrs {
   fullName: string;
   dateOfBirth: Date;
   phoneNumber: string;
-  // idNumber: string;
-  // groupId: number;
 }
 
-enum StudentStatus {
+export enum StudentStatus {
   ACTIVE = 'Активен',
   EXPELLED = 'Отчислен',
   GRADUATED = 'Окончил обучение',
@@ -25,8 +29,12 @@ export class Student extends Model<Student, StudentCreationAttrs>{
   declare id: number;
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор пользователя'})
+  @ForeignKey(() => User)
   @Column({type: DataType.INTEGER, unique: true})
   userId: number;
+
+  @BelongsTo(() => User)
+  user: User;
 
   @ApiProperty({example: 'Иванов Иван Иванович', description: 'ФИО'})
   @Column({type: DataType.STRING, allowNull: false})
@@ -39,18 +47,6 @@ export class Student extends Model<Student, StudentCreationAttrs>{
   @ApiProperty({example: '+375291231213', description: 'Номер телефона'})
   @Column({type: DataType.STRING, allowNull: false})
   phoneNumber: string;
-
-  @ApiProperty({example: 'ivanov@mail.ru', description: 'Электронная почта'})
-  @Column({type: DataType.STRING})
-  email: string;
-
-  // @ApiProperty({example: '123457890', description: 'Пароль'})
-  // @Column({type: DataType.STRING})
-  // password: string;
-
-  // @ApiProperty({example: '123457890', description: 'Идентификационный номер паспорта'})
-  // @Column({type: DataType.STRING, unique: true})
-  // idNumber: string;
   
   @ApiProperty({example: 'Активен', description: 'Статус'})
   @Column({type: DataType.ENUM(...Object.values(StudentStatus)), defaultValue: StudentStatus.ACTIVE, allowNull: false})
@@ -66,9 +62,21 @@ export class Student extends Model<Student, StudentCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Идентификатор группы'})
   @ForeignKey(() => Group)
-  // @Column({type: DataType.INTEGER, allowNull: false})
+  @Column({type: DataType.INTEGER, allowNull: false})
   groupId: number;
 
   @BelongsTo(() => Group)
-  group: Group
+  group: Group;
+
+  @BelongsToMany(() => TestEvent, () => TestResult)
+  tests: TestEvent[];
+
+  @BelongsToMany(() => LectureEvent, () => StudentLecture)
+  lectures: LectureEvent[];
+
+  @HasMany(() => TestResult)
+  testResults: TestResult[];
+
+  @HasMany(() => DrivingEvent)
+  drivings: DrivingEvent;
 }

@@ -1,26 +1,37 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateInstructorDto } from './dto/create-instructor.dto';
 import { UpdateInstructorDto } from './dto/update-instructor.dto';
+import { UpdateStatusDto } from './dto/update-status.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { Instructor } from './instructors.model';
 
 @Injectable()
 export class InstructorsService {
-  create(createInstructorDto: CreateInstructorDto) {
-    return 'This action adds a new instructor';
+
+  constructor(
+    @InjectModel(Instructor)
+    private instructorRepository: typeof Instructor,
+  ){}
+
+  async createInstructor(dto: CreateInstructorDto) {
+    const instructor = await this.instructorRepository.create(dto);
+    return instructor;
   }
 
-  findAll() {
-    return `This action returns all instructors`;
+  async getAllInstructors() {
+    const instructors = await this.instructorRepository.findAll();
+    return instructors;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} instructor`;
-  }
+  async updateStudentStatus(studentId: number, dto: UpdateStatusDto){
+    const instructor = await this.instructorRepository.findByPk(studentId);
+    if(!instructor){
+      throw new HttpException('Инструктор не найден', HttpStatus.NOT_FOUND)
+    }
 
-  update(id: number, updateInstructorDto: UpdateInstructorDto) {
-    return `This action updates a #${id} instructor`;
-  }
+    instructor.status = dto.status;
+    await instructor.save();
 
-  remove(id: number) {
-    return `This action removes a #${id} instructor`;
+    return instructor;
   }
 }

@@ -1,3 +1,5 @@
 export class CreateGroupDto {
-  readonly name: string;
+  readonly number: string
+  readonly categoryValue: string
+  readonly teacherId: string
 }

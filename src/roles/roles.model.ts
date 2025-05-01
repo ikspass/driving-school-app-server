@@ -1,5 +1,6 @@
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
+import { User } from "src/users/users.model";
 
 interface RoleCreationAttrs{
   value: string,
@@ -12,11 +13,14 @@ export class Role extends Model<Role, RoleCreationAttrs>{
   @Column({type: DataType.INTEGER, unique: true, primaryKey: true, autoIncrement: true})
   declare id: number;
 
-  @ApiProperty({example: 'STUDENT', description: 'Роль'})
+  @ApiProperty({example: 'student', description: 'Роль'})
   @Column({type: DataType.STRING, allowNull: false})
   value: string;
 
   @ApiProperty({example: 'Курсант', description: 'Описание роли'})
   @Column({type: DataType.STRING, allowNull: false})
   description: string;
+
+  @HasMany(() => User)
+  users: User[]
 }

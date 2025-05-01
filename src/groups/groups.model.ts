@@ -1,17 +1,19 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { Category } from "src/categories/categories.model";
+import { LectureEvent } from "src/lecture_events/lecture_events.model";
+import { Student } from "src/students/students.model";
 import { Teacher } from "src/teachers/teachers.model";
+import { TestEvent } from "src/test_events/test_events.model";
 
 interface GroupCreationAttrs{
   number: string,
-  category: string,
-  teacher: string,
+  categoryValue: string,
+  teacherId: string,
 }
 
 enum GroupStatus {
   ACTIVE = 'Активна',
-  DISBANDED = 'Распущена',
   GRADUATED = 'Обучение закончено'
 }
 
@@ -28,7 +30,7 @@ export class Group extends Model<Group, GroupCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Идентификатор категории'})
   @ForeignKey(() => Category)
-  @Column({type: DataType.INTEGER, allowNull: false}) //category
+  @Column({type: DataType.INTEGER, allowNull: false})
   categoryId: number;
 
   @BelongsTo(() => Category)
@@ -47,4 +49,13 @@ export class Group extends Model<Group, GroupCreationAttrs>{
 
   @Column({type: DataType.ENUM(...Object.values(GroupStatus)), defaultValue: GroupStatus.ACTIVE, allowNull: false})
   status: GroupStatus;
+
+  @HasMany(() => Student)
+  students: Student[];
+
+  @HasMany(() => TestEvent)
+  tests: TestEvent[];
+
+  @HasMany(() => LectureEvent)
+  lectureLessons: LectureEvent[];
 }

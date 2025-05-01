@@ -1,8 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { Column, DataType, HasOne, Model, Table } from "sequelize-typescript";
+import { Instructor } from "src/instructors/instructors.model";
 
 interface CarCreationAttrs{
-  name: string;
+  name: string
+  sign: string
+  color: string
 }
 
 enum CarStatus {
@@ -23,10 +26,17 @@ export class Car extends Model<Car, CarCreationAttrs>{
   name: string;
 
   @ApiProperty({example: '8682 AX-3', description: 'Номер'})
-  @Column({type: DataType.STRING, allowNull: false})
+  @Column({type: DataType.STRING, allowNull: false, unique: true})
   sign: string;
+
+  @ApiProperty({example: 'Белый', description: 'Цвет автомобиля'})
+  @Column({type: DataType.STRING, allowNull: false})
+  color: string;
 
   @ApiProperty({example: 'В ремонте', description: 'Статус'})
   @Column({type: DataType.ENUM(...Object.values(CarStatus)), defaultValue: CarStatus.ACTIVE, allowNull: false})
   status: CarStatus;
+
+  @HasOne(() => Instructor)
+  instructor: Instructor;
 }

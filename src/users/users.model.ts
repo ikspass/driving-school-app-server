@@ -1,6 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Table, Model, DataType, Column, BelongsTo, ForeignKey } from "sequelize-typescript";
+import { Table, Model, DataType, Column, BelongsTo, ForeignKey, HasOne } from "sequelize-typescript";
+import { Instructor } from "src/instructors/instructors.model";
 import { Role } from "src/roles/roles.model";
+import { Student } from "src/students/students.model";
+import { Teacher } from "src/teachers/teachers.model";
 
 interface UserCreationAttrs {
   idNumber: string;
@@ -28,5 +31,14 @@ export class User extends Model<User, UserCreationAttrs>{
   roleId: number;
 
   @BelongsTo(() => Role)
-  role: Role
+  role: Role;
+
+  @HasOne(() => Teacher)
+  teacher: Teacher;
+
+  @HasOne(() => Instructor)
+  instructor: Instructor;
+
+  @HasOne(() => Student)
+  student: Student;
 }
