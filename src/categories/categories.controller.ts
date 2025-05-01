@@ -7,12 +7,12 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoriesService.create(createCategoryDto);
+  create(@Body() dto: CreateCategoryDto) {
+    return this.categoriesService.createCategory(dto);
   }
 
   @Get()
   findAll() {
-    return this.categoriesService.findAll();
+    return this.categoriesService.getAllCategories();
   }
 }

@@ -1,26 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateChapterDto } from './dto/create-chapter.dto';
 import { UpdateChapterDto } from './dto/update-chapter.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { Chapter } from './chapters.model';
 
 @Injectable()
 export class ChaptersService {
-  create(createChapterDto: CreateChapterDto) {
-    return 'This action adds a new chapter';
+  constructor(@InjectModel(Chapter) private chapterRepository: typeof Chapter) {}
+
+  async createChapter(dto: CreateChapterDto) {
+    const chapter = await this.chapterRepository.create(dto)
+    return chapter;
   }
 
-  findAll() {
-    return `This action returns all chapters`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} chapter`;
-  }
-
-  update(id: number, updateChapterDto: UpdateChapterDto) {
-    return `This action updates a #${id} chapter`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} chapter`;
+  async getAllChapters() {
+    const chapters = await this.chapterRepository.findAll({include:{all: true}});
+    return chapters;
   }
 }

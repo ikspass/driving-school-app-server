@@ -9,26 +9,11 @@ export class TestEventsController {
 
   @Post()
   create(@Body() createTestLessonDto: CreateTestEventDto) {
-    return this.testLessonsService.create(createTestLessonDto);
+    return this.testLessonsService.createTestEvent(createTestLessonDto);
   }
 
   @Get()
   findAll() {
-    return this.testLessonsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.testLessonsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTestLessonDto: UpdateTestLessonDto) {
-    return this.testLessonsService.update(+id, updateTestLessonDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.testLessonsService.remove(+id);
+    return this.testLessonsService.getAllTestEvents();
   }
 }

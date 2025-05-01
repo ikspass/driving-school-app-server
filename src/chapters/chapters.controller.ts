@@ -8,27 +8,12 @@ export class ChaptersController {
   constructor(private readonly chaptersService: ChaptersService) {}
 
   @Post()
-  create(@Body() createChapterDto: CreateChapterDto) {
-    return this.chaptersService.create(createChapterDto);
+  create(@Body() dto: CreateChapterDto) {
+    return this.chaptersService.createChapter(dto);
   }
 
   @Get()
   findAll() {
-    return this.chaptersService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.chaptersService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateChapterDto: UpdateChapterDto) {
-    return this.chaptersService.update(+id, updateChapterDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.chaptersService.remove(+id);
+    return this.chaptersService.getAllChapters();
   }
 }

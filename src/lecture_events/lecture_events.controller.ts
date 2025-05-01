@@ -3,32 +3,17 @@ import { LectureEventsService } from './lecture_events.service';
 import { CreateLectureEventDto } from './dto/create-lecture_event.dto';
 import { UpdateLectureEventDto } from './dto/update-lecture_event.dto';
 
-@Controller('lecture-lessons')
+@Controller('lecture-events')
 export class LectureEventsController {
   constructor(private readonly lectureLessonsService: LectureEventsService) {}
 
   @Post()
-  create(@Body() createLectureLessonDto: CreateLectureEventDto) {
-    return this.lectureLessonsService.create(createLectureLessonDto);
+  create(@Body() dto: CreateLectureEventDto) {
+    return this.lectureLessonsService.createLectureEvent(dto);
   }
 
   @Get()
   findAll() {
-    return this.lectureLessonsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.lectureLessonsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLectureLessonDto: UpdateLectureEventDto) {
-    return this.lectureLessonsService.update(+id, updateLectureLessonDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.lectureLessonsService.remove(+id);
+    return this.lectureLessonsService.getAllLectureEvents();
   }
 }

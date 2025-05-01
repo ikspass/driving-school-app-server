@@ -16,4 +16,4 @@ import { StudentLecture } from './student-lectures.model';
     SequelizeModule.forFeature([LectureEvent, Group, Student, Teacher, Topic, StudentLecture])
   ]
 })
-export class LectureLessonsModule {}
+export class LectureEventsModule {}

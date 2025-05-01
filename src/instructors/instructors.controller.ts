@@ -23,7 +23,7 @@ export class InstructorsController {
   @ApiResponse({status: 200, type: Instructor})
   @Patch(':id/status')
   updateStatus(@Param('id') id: number, @Body() dto: UpdateStatusDto) {
-    return this.instructorsService.updateStudentStatus(id, dto);
+    return this.instructorsService.updateInstructorStatus(id, dto);
   }
 
   // @Patch(':id')

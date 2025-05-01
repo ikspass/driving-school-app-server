@@ -23,8 +23,8 @@ export class InstructorsService {
     return instructors;
   }
 
-  async updateStudentStatus(studentId: number, dto: UpdateStatusDto){
-    const instructor = await this.instructorRepository.findByPk(studentId);
+  async updateInstructorStatus(instructorId: number, dto: UpdateStatusDto){
+    const instructor = await this.instructorRepository.findByPk(instructorId);
     if(!instructor){
       throw new HttpException('Инструктор не найден', HttpStatus.NOT_FOUND)
     }

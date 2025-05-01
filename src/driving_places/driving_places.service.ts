@@ -1,26 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDrivingPlaceDto } from './dto/create-driving_place.dto';
 import { UpdateDrivingPlaceDto } from './dto/update-driving_place.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { DrivingPlace } from './driving_places.model';
 
 @Injectable()
 export class DrivingPlacesService {
-  create(createDrivingPlaceDto: CreateDrivingPlaceDto) {
-    return 'This action adds a new drivingPlace';
+  constructor(@InjectModel(DrivingPlace) private drivingPlaceRepository: typeof DrivingPlace) {}
+
+  async createDrivingPlace(dto: CreateDrivingPlaceDto) {
+    const drivingPlace = await this.drivingPlaceRepository.create(dto)
+    return drivingPlace;
   }
 
-  findAll() {
-    return `This action returns all drivingPlaces`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} drivingPlace`;
-  }
-
-  update(id: number, updateDrivingPlaceDto: UpdateDrivingPlaceDto) {
-    return `This action updates a #${id} drivingPlace`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} drivingPlace`;
+  async getAllDrivingPlaces() {
+    const drivingPlaces = await this.drivingPlaceRepository.findAll({include:{all: true}});
+    return drivingPlaces;
   }
 }

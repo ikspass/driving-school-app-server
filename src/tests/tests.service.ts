@@ -1,26 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTestDto } from './dto/create-test.dto';
 import { UpdateTestDto } from './dto/update-test.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { Test } from './tests.model';
 
 @Injectable()
 export class TestsService {
-  create(createTestDto: CreateTestDto) {
-    return 'This action adds a new test';
+  constructor(@InjectModel(Test) private testRepository: typeof Test) {}
+
+  async createTest(dto: CreateTestDto) {
+    const test = await this.testRepository.create(dto)
+    return test;
   }
 
-  findAll() {
-    return `This action returns all tests`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} test`;
-  }
-
-  update(id: number, updateTestDto: UpdateTestDto) {
-    return `This action updates a #${id} test`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} test`;
+  async getAllTests() {
+    const tests = await this.testRepository.findAll({include:{all: true}});
+    return tests;
   }
 }

@@ -1,26 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTopicDto } from './dto/create-topic.dto';
 import { UpdateTopicDto } from './dto/update-topic.dto';
+import { InjectModel } from '@nestjs/sequelize';
+import { Topic } from './topics.model';
 
 @Injectable()
 export class TopicsService {
-  create(createTopicDto: CreateTopicDto) {
-    return 'This action adds a new topic';
+
+  constructor(@InjectModel(Topic) private topicRepository: typeof Topic) {}
+
+  async createTopic(dto: CreateTopicDto) {
+    const topic = await this.topicRepository.create(dto)
+    return topic;
   }
 
-  findAll() {
-    return `This action returns all topics`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} topic`;
-  }
-
-  update(id: number, updateTopicDto: UpdateTopicDto) {
-    return `This action updates a #${id} topic`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} topic`;
+  async getAllTopics() {
+    const topics = await this.topicRepository.findAll({include:{all: true}});
+    return topics;
   }
 }

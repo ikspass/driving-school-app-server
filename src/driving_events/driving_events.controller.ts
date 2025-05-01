@@ -8,27 +8,12 @@ export class DrivingEventsController {
   constructor(private readonly drivingEventsService: DrivingEventsService) {}
 
   @Post()
-  create(@Body() createDrivingEventDto: CreateDrivingEventDto) {
-    return this.drivingEventsService.create(createDrivingEventDto);
+  create(@Body() dto: CreateDrivingEventDto) {
+    return this.drivingEventsService.createDrivingEvent(dto);
   }
 
   @Get()
   findAll() {
-    return this.drivingEventsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.drivingEventsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDrivingEventDto: UpdateDrivingEventDto) {
-    return this.drivingEventsService.update(+id, updateDrivingEventDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.drivingEventsService.remove(+id);
+    return this.drivingEventsService.getAllDrivingEvents();
   }
 }

@@ -8,27 +8,12 @@ export class TopicsController {
   constructor(private readonly topicsService: TopicsService) {}
 
   @Post()
-  create(@Body() createTopicDto: CreateTopicDto) {
-    return this.topicsService.create(createTopicDto);
+  create(@Body() dto: CreateTopicDto) {
+    return this.topicsService.createTopic(dto);
   }
 
   @Get()
   findAll() {
-    return this.topicsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.topicsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTopicDto: UpdateTopicDto) {
-    return this.topicsService.update(+id, updateTopicDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.topicsService.remove(+id);
+    return this.topicsService.getAllTopics();
   }
 }

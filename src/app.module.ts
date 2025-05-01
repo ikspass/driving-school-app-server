@@ -22,7 +22,7 @@ import { User } from './users/users.model';
 import { Role } from './roles/roles.model';
 import { LectureEventsService } from './lecture_events/lecture_events.service';
 import { LectureEventsController } from './lecture_events/lecture_events.controller';
-import { LectureLessonsModule } from './lecture_events/lecture_events.module';
+import { LectureEventsModule } from './lecture_events/lecture_events.module';
 import { DrivingPlacesModule } from './driving_places/driving_places.module';
 import { DrivingEventsModule } from './driving_events/driving_events.module';
 import { TestLessonsModule } from './test_events/test_events.module';
@@ -92,7 +92,7 @@ import { Message } from './messages/messages.model';
     AuthModule,
     UsersModule,
     RolesModule,
-    LectureLessonsModule,
+    LectureEventsModule,
     TopicsModule,
     ChaptersModule,
     TestsModule,
@@ -101,7 +101,7 @@ import { Message } from './messages/messages.model';
     DrivingPlacesModule,
     MessagesModule,
   ],
-  controllers: [LectureEventsController],
-  providers: [LectureEventsService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
