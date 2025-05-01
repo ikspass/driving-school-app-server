@@ -4,7 +4,7 @@ import { TestEventsController } from './test_events.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { TestEvent } from './test_events.model';
 import { Group } from 'src/groups/groups.model';
-import { Test } from '@nestjs/testing';
+import { Test } from 'src/tests/tests.model';
 
 @Module({
   controllers: [TestEventsController],

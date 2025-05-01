@@ -5,7 +5,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Category } from './categories.model';
 import { Instructor } from 'src/instructors/instructors.model';
 import { Group } from 'src/groups/groups.model';
-import { Test } from '@nestjs/testing';
+import { Test } from 'src/tests/tests.model';
 
 @Module({
   controllers: [CategoriesController],
