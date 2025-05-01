@@ -7,7 +7,7 @@ interface TopicCreateAttrs{
   name: string
 }
 
-@Table({tableName: 'topic', updatedAt: false})
+@Table({tableName: 'topics', updatedAt: false})
 export class Topic extends Model<Topic, TopicCreateAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})

@@ -2,6 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { Category } from "src/categories/categories.model";
 import { LectureEvent } from "src/lecture_events/lecture_events.model";
+import { Message } from "src/messages/messages.model";
 import { Student } from "src/students/students.model";
 import { Teacher } from "src/teachers/teachers.model";
 import { TestEvent } from "src/test_events/test_events.model";
@@ -55,6 +56,9 @@ export class Group extends Model<Group, GroupCreationAttrs>{
 
   @HasMany(() => TestEvent)
   tests: TestEvent[];
+
+  @HasMany(() => Message)
+  messages: Message;
 
   @HasMany(() => LectureEvent)
   lectureLessons: LectureEvent[];

@@ -41,6 +41,8 @@ import { StudentLecture } from './lecture_events/student-lectures.model';
 import { StudentTest } from './tests/student-tests.model';
 import { TestResult } from './tests/test-results.model';
 import { InstructorCategory } from './categories/instructor-categories.model';
+import { MessagesModule } from './messages/messages.module';
+import { Message } from './messages/messages.model';
 
 @Module({
   imports: [
@@ -76,6 +78,7 @@ import { InstructorCategory } from './categories/instructor-categories.model';
         Test,
         Topic,
         User,
+        Message
       ],
       autoLoadModels: true
     }),
@@ -96,6 +99,7 @@ import { InstructorCategory } from './categories/instructor-categories.model';
     TestLessonsModule,
     DrivingEventsModule,
     DrivingPlacesModule,
+    MessagesModule,
   ],
   controllers: [LectureEventsController],
   providers: [LectureEventsService],
