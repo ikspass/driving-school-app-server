@@ -10,6 +10,7 @@ interface TeacherCreateAttrs{
   fullName: string,
   phoneNumber: string,
   dateOfEmployment: Date,
+  dateOfBirth: Date,
 }
 
 export enum TeacherStatus {
@@ -33,14 +34,6 @@ export class Teacher extends Model<Teacher, TeacherCreateAttrs>{
 
   @BelongsTo(() => User)
   user: User;
-  
-  @ApiProperty({example: 'Иванов Иван Иванович', description: 'ФИО'})
-  @Column({type: DataType.STRING, allowNull: false})
-  fullName: string;
-
-  @ApiProperty({example: '+375291231314', description: 'Номер телефона'})
-  @Column({type: DataType.STRING, allowNull: false})
-  phoneNumber: string;
 
   @ApiProperty({example: '2025-04-28', description: 'Дата приёма на работу'})
   @Column({type: DataType.DATEONLY, allowNull: false})

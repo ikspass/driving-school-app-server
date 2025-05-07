@@ -8,9 +8,10 @@ import { Student } from "src/students/students.model";
 import { User } from "src/users/users.model";
 
 interface InstructorCreateAttrs{
-  fullName: string,
-  phoneNumber: string,
+  fullName: string
+  phoneNumber: string
   dateOfEmployment: Date
+  dateOfBirth: Date
 }
 
 export enum InstructorStatus {
@@ -34,14 +35,6 @@ export class Instructor extends Model<Instructor, InstructorCreateAttrs>{
 
   @BelongsTo(() => User)
   user: User;
-
-  @ApiProperty({example: 'Иванов Иван Иванович', description: 'ФИО'})
-  @Column({type: DataType.STRING, allowNull: false})
-  fullName: string;
-
-  @ApiProperty({example: '+375291231314', description: 'Номер телефона'})
-  @Column({type: DataType.STRING, allowNull: false})
-  phoneNumber: string;
 
   @ApiProperty({example: 'Более не работает', description: 'Статус'})
   @Column({type: DataType.ENUM(...Object.values(InstructorStatus)), defaultValue: InstructorStatus.ACTIVE, allowNull: false})

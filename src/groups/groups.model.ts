@@ -42,6 +42,10 @@ export class Group extends Model<Group, GroupCreationAttrs>{
   @Column({type: DataType.INTEGER, allowNull: false})
   teacherId: number;
 
+  @ApiProperty({example: '1', description: 'Количество студентов'})
+  @Column({type: DataType.INTEGER, allowNull: false, defaultValue: 0})
+  studentsCount: number;
+
   @BelongsTo(() => Teacher)
   teacher: Teacher;
 

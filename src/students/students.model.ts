@@ -35,18 +35,6 @@ export class Student extends Model<Student, StudentCreationAttrs>{
 
   @BelongsTo(() => User)
   user: User;
-
-  @ApiProperty({example: 'Иванов Иван Иванович', description: 'ФИО'})
-  @Column({type: DataType.STRING, allowNull: false})
-  fullName: string;
-
-  @ApiProperty({example: '2005-09-18', description: 'Дата рождения'})
-  @Column({type: DataType.DATEONLY, allowNull: false})
-  dateOfBirth: Date;
-
-  @ApiProperty({example: '+375291231213', description: 'Номер телефона'})
-  @Column({type: DataType.STRING, allowNull: false})
-  phoneNumber: string;
   
   @ApiProperty({example: 'Активен', description: 'Статус'})
   @Column({type: DataType.ENUM(...Object.values(StudentStatus)), defaultValue: StudentStatus.ACTIVE, allowNull: false})
