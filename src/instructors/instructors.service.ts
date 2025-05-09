@@ -4,6 +4,7 @@ import { UpdateInstructorDto } from './dto/update-instructor.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Instructor } from './instructors.model';
+import { Category } from 'src/categories/categories.model';
 
 @Injectable()
 export class InstructorsService {
@@ -19,7 +20,17 @@ export class InstructorsService {
   }
 
   async getAllInstructors() {
-    const instructors = await this.instructorRepository.findAll();
+    const instructors = await this.instructorRepository.findAll({
+      order: [['id', 'ASC']],
+      include: [
+        {
+          model: Category,
+          through: {
+            attributes: ['categoryId']
+          }
+        }
+      ]
+    });
     return instructors;
   }
 

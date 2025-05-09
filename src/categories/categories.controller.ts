@@ -15,4 +15,9 @@ export class CategoriesController {
   findAll() {
     return this.categoriesService.getAllCategories();
   }
+
+  @Get('/:value')
+  getByValue(@Param('value') value: string){
+    return this.categoriesService.getCategoryByValue(value)
+  }
 }

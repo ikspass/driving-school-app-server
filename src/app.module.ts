@@ -5,7 +5,6 @@ import { StudentsModule } from './students/students.module';
 import { InstructorsModule } from './instructors/instructors.module';
 import { GroupsModule } from './groups/groups.module';
 import { TeachersModule } from './teachers/teachers.module';
-import { CarsModule } from './cars/cars.module';
 import { CategoriesModule } from './categories/categories.module';
 import { QualsModule } from './quals/quals.module';
 import { Student } from './students/students.model';
@@ -13,7 +12,6 @@ import { Instructor } from './instructors/instructors.model';
 import { Teacher } from './teachers/teachers.model';
 import { Qual } from './quals/quals.model';
 import { Group } from './groups/groups.model';
-import { Car } from './cars/cars.model';
 import { Category } from './categories/categories.model';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
@@ -36,13 +34,24 @@ import { LectureEvent } from './lecture_events/lecture_events.model';
 import { TestEvent } from './test_events/test_events.model';
 import { Test } from './tests/tests.model';
 import { Topic } from './topics/topics.model';
-import { TeacherQuals } from './quals/teacher-quals.model';
-import { StudentLecture } from './lecture_events/student-lectures.model';
-import { StudentTest } from './tests/student-tests.model';
-import { TestResult } from './tests/test-results.model';
-import { InstructorCategory } from './categories/instructor-categories.model';
+import { TeacherQuals } from './teacher_quals/teacher-quals.model';
+import { StudentLecture } from './student_lectures/student_lectures.model';
+import { TestResult } from './test_results/test_results.model';
+import { InstructorCategory } from './instructor_categories/instructor_categories.model';
 import { MessagesModule } from './messages/messages.module';
 import { Message } from './messages/messages.model';
+import { TransportsModule } from './transports/transports.module';
+import { Transport } from './transports/transports.model';
+import { ScheduleGroupsController } from './schedule_groups/schedule_groups.controller';
+import { ScheduleGroupsService } from './schedule_groups/schedule_groups.service';
+import { ScheduleGroupsModule } from './schedule_groups/schedule_groups.module';
+import { ScheduleGroup } from './schedule_groups/schedule_groups.model';
+import { InstructorCategoriesModule } from './instructor_categories/instructor_categories.module';
+import { TeacherQualsModule } from './teacher_quals/teacher_quals.module';
+import { TestResultsModule } from './test_results/test_results.module';
+import { StudentLecturesModule } from './student_lectures/student_lectures.module';
+import { StudentTestsModule } from './student_tests/student_tests.module';
+import { StudentTest } from './student_tests/student_tests.model';
 
 @Module({
   imports: [
@@ -57,7 +66,7 @@ import { Message } from './messages/messages.model';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       models: [
-        Car,
+        Transport,
         Category,
         Chapter,
         DrivingEvent,
@@ -69,7 +78,6 @@ import { Message } from './messages/messages.model';
         Qual,
         Role,
         Student,
-        StudentLecture,
         StudentTest,
         Teacher,
         TeacherQuals,
@@ -78,7 +86,9 @@ import { Message } from './messages/messages.model';
         Test,
         Topic,
         User,
-        Message
+        Message,
+        ScheduleGroup,
+        StudentLecture
       ],
       autoLoadModels: true
     }),
@@ -86,7 +96,7 @@ import { Message } from './messages/messages.model';
     InstructorsModule,
     GroupsModule,
     TeachersModule,
-    CarsModule,
+    TransportsModule,
     CategoriesModule,
     QualsModule,
     AuthModule,
@@ -100,6 +110,12 @@ import { Message } from './messages/messages.model';
     DrivingEventsModule,
     DrivingPlacesModule,
     MessagesModule,
+    ScheduleGroupsModule,
+    InstructorCategoriesModule,
+    TeacherQualsModule,
+    TestResultsModule,
+    StudentTestsModule,
+    StudentLecturesModule,
   ],
   controllers: [],
   providers: [],

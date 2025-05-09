@@ -2,10 +2,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { Category } from "src/categories/categories.model";
 import { Chapter } from "src/chapters/chapters.model";
-import { TestResult } from "./test-results.model";
+import { TestResult } from "../test_results/test_results.model";
 
 interface TestCreationAttrs {
   name: string;
+  description: string;
   categoryValue: string;
 }
 

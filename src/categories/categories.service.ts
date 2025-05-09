@@ -13,7 +13,15 @@ export class CategoriesService {
   }
 
   async getAllCategories() {
-    const categories = await this.categoryRepository.findAll({include:{all: true}});
+    const categories = await this.categoryRepository.findAll({
+      order: [['id', 'ASC']],
+      include:{all: true}});
     return categories;
+  }
+
+  async getCategoryByValue(value: string){
+    const category = await this.categoryRepository.findOne({where: {value}})
+    console.log('category', category)
+    return category;
   }
 }

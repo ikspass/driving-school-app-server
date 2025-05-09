@@ -1,7 +1,7 @@
 import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 import { Teacher } from "src/teachers/teachers.model";
-import { TeacherQuals } from "./teacher-quals.model";
+import { TeacherQuals } from "src/teacher_quals/teacher-quals.model";
 
 interface QualCreationAttrs{
   value: string,

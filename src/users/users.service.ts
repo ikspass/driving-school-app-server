@@ -3,6 +3,11 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import { RolesService } from 'src/roles/roles.service';
+import { Student } from 'src/students/students.model';
+import { Group } from 'src/groups/groups.model';
+import { Instructor } from 'src/instructors/instructors.model';
+import { Teacher } from 'src/teachers/teachers.model';
+import { Role } from 'src/roles/roles.model';
 
 @Injectable()
 export class UsersService {
@@ -16,8 +21,7 @@ export class UsersService {
     const user = await this.userRepository.create(dto);
     const role = await this.roleService.getRoleByValue(dto.roleValue);
     if(role){
-      await user.$set('role', [role.id])
-      user.roleId = role.id;
+      await user.$set('role', role.id)
       user.role = role;
       await user.save();
     }
@@ -25,7 +29,14 @@ export class UsersService {
   }
 
   async getAllUsers(){
-    const users = await this.userRepository.findAll({include: {all: true}});
+    const users = await this.userRepository.findAll({
+      order: [['id', 'ASC']],
+      include: [
+        {model: Student, include: [Group, Instructor]},
+        {model: Teacher, include: []},
+        {model: Instructor, include: []},
+        {model: Role},
+      ]});
     return users;
   }
 

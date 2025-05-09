@@ -1,9 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { BelongsToMany, Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import { Group } from "src/groups/groups.model";
-import { InstructorCategory } from "./instructor-categories.model";
+import { InstructorCategory } from "../instructor_categories/instructor_categories.model";
 import { Instructor } from "src/instructors/instructors.model";
 import { Test } from "src/tests/tests.model";
+import { Student } from "src/students/students.model";
 
 interface CategoryCreationAttrs{
   value: string,
@@ -30,6 +31,9 @@ export class Category extends Model<Category, CategoryCreationAttrs>{
 
   @HasMany(() => Group)
   groups: Group[];
+
+  @HasMany(() => Student)
+  students: Student[];
 
   @HasMany(() => Test)
   tests: Test[]

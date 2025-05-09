@@ -1,24 +1,18 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Table, Model, DataType, Column, ForeignKey, BelongsTo, BelongsToMany, HasMany } from "sequelize-typescript";
+import { Category } from "src/categories/categories.model";
 import { DrivingEvent } from "src/driving_events/driving_events.model";
 import { Group } from "src/groups/groups.model";
 import { Instructor } from "src/instructors/instructors.model";
 import { LectureEvent } from "src/lecture_events/lecture_events.model";
-import { StudentLecture } from "src/lecture_events/student-lectures.model";
+import { StudentLecture } from "src/student_lectures/student_lectures.model";
 import { TestEvent } from "src/test_events/test_events.model";
-import { TestResult } from "src/tests/test-results.model";
+import { TestResult } from "src/test_results/test_results.model";
 import { User } from "src/users/users.model";
 
 interface StudentCreationAttrs {
-  fullName: string;
-  dateOfBirth: Date;
-  phoneNumber: string;
-}
-
-export enum StudentStatus {
-  ACTIVE = 'Активен',
-  EXPELLED = 'Отчислен',
-  GRADUATED = 'Окончил обучение',
+  userId: number
+  categoryValue: string
 }
 
 @Table({tableName: 'students', updatedAt: false})
@@ -37,8 +31,8 @@ export class Student extends Model<Student, StudentCreationAttrs>{
   user: User;
   
   @ApiProperty({example: 'Активен', description: 'Статус'})
-  @Column({type: DataType.ENUM(...Object.values(StudentStatus)), defaultValue: StudentStatus.ACTIVE, allowNull: false})
-  status: StudentStatus;
+  @Column({type: DataType.STRING, defaultValue: 'Не активен', allowNull: false})
+  status: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
   @ForeignKey(() => Instructor)
@@ -50,11 +44,19 @@ export class Student extends Model<Student, StudentCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Идентификатор группы'})
   @ForeignKey(() => Group)
-  @Column({type: DataType.INTEGER, allowNull: false})
+  @Column({type: DataType.INTEGER})
   groupId: number;
 
   @BelongsTo(() => Group)
   group: Group;
+
+  @ApiProperty({example: '1', description: 'Идентификатор категории'})
+  @ForeignKey(() => Category)
+  @Column({type: DataType.INTEGER})
+  categoryId: number;
+
+  @BelongsTo(() => Category)
+  category: Category;
 
   @BelongsToMany(() => TestEvent, () => TestResult)
   tests: TestEvent[];

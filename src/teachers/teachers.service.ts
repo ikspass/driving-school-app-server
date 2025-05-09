@@ -24,7 +24,9 @@ export class TeachersService {
   }
 
   async getAllTeachers() {
-    const teachers = await this.teacherRepository.findAll({include:{all: true}});
+    const teachers = await this.teacherRepository.findAll({
+      order: [['id', 'ASC']],
+      include:{all: true}});
     return teachers;
   }
 

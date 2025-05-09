@@ -33,10 +33,10 @@ export class Chapter extends Model<Chapter, ChapterCreateAttrs>{
   topic: Topic;
 
   @ApiProperty({ example: '1', description: 'Идентификатор теста' })
-  @ForeignKey(() => Test) // Добавьте внешний ключ на Test
+  @ForeignKey(() => Test)
   @Column({ type: DataType.INTEGER, allowNull: false })
-  testId: number; // Поле для связи с тестом
+  testId: number;
 
   @BelongsTo(() => Test)
-  test: Test; // Связь с Test
+  test: Test;
 }

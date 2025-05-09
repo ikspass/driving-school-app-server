@@ -1,5 +1,11 @@
+import { IsNotEmpty, IsNumber, IsString } from "class-validator"
+
 export class CreateStudentDto {
-  readonly fullName: string;
-  readonly dateOfBirth: Date;
-  readonly phoneNumber: string;
+  @IsNumber()
+  @IsNotEmpty()
+  readonly userId: number
+
+  @IsString()
+  @IsNotEmpty()
+  readonly categoryValue: string
 }

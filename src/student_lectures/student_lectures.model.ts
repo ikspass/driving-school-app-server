@@ -1,10 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
 import { Student } from "src/students/students.model";
-import { TestEvent } from "src/test_events/test_events.model";
+import { LectureEvent } from "src/lecture_events/lecture_events.model";
 
-@Table({tableName: 'student_tests', updatedAt: false})
-export class StudentTest extends Model<StudentTest>{
+interface StudentLectureCreationAttrs{
+  studentId: number
+  lectureId: number
+}
+
+@Table({tableName: 'student_lectures', updatedAt: false})
+export class StudentLecture extends Model<StudentLecture, StudentLectureCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
   @Column({type: DataType.INTEGER, unique: true, primaryKey: true, autoIncrement: true})
@@ -15,16 +20,16 @@ export class StudentTest extends Model<StudentTest>{
   @Column({type: DataType.INTEGER, allowNull: false})
   studentId: number;
 
-  @BelongsTo(() => Student)
+  @BelongsTo(() => Student, {as: 'studentLectureStudentInfo'})
   student: Student;
 
-  @ApiProperty({example: '1', description: 'Идентификатор зачёта'})
-  @ForeignKey(() => TestEvent)
+  @ApiProperty({example: '1', description: 'Идентификатор лекции'})
+  @ForeignKey(() => LectureEvent)
   @Column({type: DataType.INTEGER, allowNull: false})
-  testId: number;
+  lectureId: number;
 
-  @BelongsTo(() => TestEvent)
-  test: TestEvent;
+  @BelongsTo(() => LectureEvent)
+  lecture: LectureEvent;
 
   @ApiProperty({example: 'true', description: 'Признак посещаемости'})
   @Column({type: DataType.BOOLEAN})

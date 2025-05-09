@@ -4,14 +4,14 @@ import { Student } from "src/students/students.model";
 import { TestEvent } from "src/test_events/test_events.model";
 import { Test } from "src/tests/tests.model";
 
-export enum StudentTestStatus{
-  PASSED = 'Сдано',
-  NOT_PASSED = 'Не сдано',
-  FUTURE = 'В будущем'
+interface TestResultCreationAttrs{
+  studentId: number
+  testId: number
+  testEventId: number
 }
 
 @Table({tableName: 'test_results', updatedAt: false})
-export class TestResult extends Model<TestResult>{
+export class TestResult extends Model<TestResult, TestResultCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
   @Column({type: DataType.INTEGER, unique: true, primaryKey: true, autoIncrement: true})
@@ -22,7 +22,7 @@ export class TestResult extends Model<TestResult>{
   @Column({type: DataType.INTEGER, allowNull: false})
   studentId: number;
 
-  @BelongsTo(() => Student)
+  @BelongsTo(() => Student, {as: 'testResultStudentInfo'})
   student: Student;
 
   @ApiProperty({example: '1', description: 'Идентификатор зачёта'})
@@ -42,10 +42,10 @@ export class TestResult extends Model<TestResult>{
   testEvent: TestEvent;
 
   @ApiProperty({example: 'Сдан', description: 'Статус'})
-  @Column({type: DataType.ENUM(...Object.values(StudentTestStatus)), defaultValue: StudentTestStatus.FUTURE, allowNull: false})
-  status: StudentTestStatus;
+  @Column({type: DataType.STRING, defaultValue: 'В будущем', allowNull: false})
+  status: string;
 
-  @ApiProperty({example: 'Сдан', description: 'Дата'})
+  @ApiProperty({example: '2025-04-28', description: 'Дата'})
   @Column({type: DataType.TIME, allowNull: false})
   time: string;
 

@@ -4,7 +4,7 @@ import { Group } from "src/groups/groups.model";
 import { Test } from "src/tests/tests.model";
 
 interface TestEventCreationAttrs{
-  date: Date
+  date: string
   time: string
   groupName: string
   testId: number
@@ -18,11 +18,11 @@ export class TestEvent extends Model<TestEvent, TestEventCreationAttrs>{
   declare id: number;
 
   @ApiProperty({example: '2025-05-01', description: 'Дата'})
-  @Column({type: DataType.DATEONLY, allowNull: false})
-  date: Date;
+  @Column({type: DataType.STRING, allowNull: false})
+  date: string;
 
   @ApiProperty({example: '18:00:00', description: 'Время'})
-  @Column({type: DataType.TIME, allowNull: false, unique: true})
+  @Column({type: DataType.STRING, allowNull: false, unique: true})
   time: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор группы'})

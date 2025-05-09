@@ -1,5 +1,5 @@
 export class CreateLectureEventDto {
-  readonly date: Date
+  readonly date: string
   readonly time: string
   readonly teacherId: number
   readonly groupId: number

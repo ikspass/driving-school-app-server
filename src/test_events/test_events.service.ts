@@ -3,6 +3,8 @@ import { CreateTestEventDto } from './dto/create-test_event.dto';
 import { UpdateTestLessonDto } from './dto/update-test_event.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { TestEvent } from './test_events.model';
+import { Group } from 'src/groups/groups.model';
+import { Test } from 'src/tests/tests.model';
 
 @Injectable()
 export class TestEventsService {
@@ -14,7 +16,16 @@ export class TestEventsService {
   }
 
   async getAllTestEvents() {
-    const testEvents = await this.testEventRepository.findAll({include:{all: true}});
+    const testEvents = await this.testEventRepository.findAll({
+      order: [
+        ['date', 'ASC'],
+        ['time', 'ASC']
+      ],
+      include:[
+        {model: Group},
+        {model: Test},
+      ]
+    });
     return testEvents;
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { StudentsService } from './students.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
@@ -14,21 +14,22 @@ export class StudentsController {
   @ApiOperation({summary: 'Создание курсанта'})
   @ApiResponse({status: 200, type: Student})
   @Post()
-  create(@Body() createStudentDto: CreateStudentDto) {
-    return this.studentsService.createStudent(createStudentDto);
+  @UsePipes(new ValidationPipe)
+  async create(@Body() dto: CreateStudentDto) {
+    return this.studentsService.createStudent(dto);
   }
 
   @ApiOperation({summary: 'Получение всех курсантов'})
   @ApiResponse({status: 200, type: [Student]})
   @Get()
-  getAll() {
+  async getAll() {
     return this.studentsService.getAllStudents();
   }
 
   @ApiOperation({summary: 'Изменить статус курсанта'})
   @ApiResponse({status: 200, type: Student})
   @Patch(':id/status')
-  updateStatus(@Param('id') id: number, @Body() dto: UpdateStatusDto) {
+  async updateStatus(@Param('id') id: number, @Body() dto: UpdateStatusDto) {
     return this.studentsService.updateStudentStatus(id, dto);
   }
 }

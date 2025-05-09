@@ -6,12 +6,13 @@ import { DrivingEvent } from './driving_events.model';
 import { DrivingPlace } from 'src/driving_places/driving_places.model';
 import { Instructor } from 'src/instructors/instructors.model';
 import { Student } from 'src/students/students.model';
+import { Transport } from 'src/transports/transports.model';
 
 @Module({
   controllers: [DrivingEventsController],
   providers: [DrivingEventsService],
   imports: [
-    SequelizeModule.forFeature([DrivingEvent, DrivingPlace, Instructor, Student])
+    SequelizeModule.forFeature([DrivingEvent, DrivingPlace, Instructor, Student, Transport])
   ]
 })
 export class DrivingEventsModule {}

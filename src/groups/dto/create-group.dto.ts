@@ -1,5 +1,18 @@
+import { IsNumber, IsString } from "class-validator"
+
 export class CreateGroupDto {
-  readonly number: string
+  @IsString()
+  readonly name: string
+
+  @IsString()
   readonly categoryValue: string
-  readonly teacherId: string
+
+  @IsNumber()
+  readonly teacherId: number
+
+  @IsString()
+  readonly dateOfStart: string
+
+  @IsNumber()
+  readonly scheduleGroupId: number
 }

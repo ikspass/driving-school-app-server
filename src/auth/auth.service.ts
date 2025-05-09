@@ -19,17 +19,17 @@ export class AuthService {
   }
 
   async registration(dto: CreateUserDto & {password: string}){
-    const user = await this.userService.getUserByIdNumber(dto.idNumber);
-    if(!user) {
-      throw new HttpException('Пользователя с таким идентификационным номером не существует', HttpStatus.BAD_REQUEST);
+    const candidate = await this.userService.getUserByIdNumber(dto.idNumber);
+    if(candidate){
+      if(candidate.getDataValue('password') == null){
+        const hashPassword = await bcrypt.hash(dto.password, 5);
+        candidate.setDataValue('password', hashPassword);
+        await candidate.save();
+        return this.generateToken(candidate);
+      }
+      throw new HttpException('Пользователь с таким идентификационным номером уже зарегистрирован', HttpStatus.BAD_REQUEST);
     }
-
-    const hashPassword = await bcrypt.hash(dto.password, 5);
-    user.setDataValue('password', hashPassword);
-
-    await user.save();
-    
-    return this.generateToken(user);
+    throw new HttpException('Пользователя с таким идентификационным номером не существует', HttpStatus.BAD_REQUEST);
   }
 
   private async generateToken(user: User){

@@ -12,6 +12,11 @@ export class QualsController {
     return this.qualsService.createQual(dto);
   }
 
+  @Get()
+  getAll() {
+    return this.qualsService.getAll();
+  }
+
   @Get('/:value')
   getByValue(@Param('value') value: string) {
     return this.qualsService.getQualByValue(value);

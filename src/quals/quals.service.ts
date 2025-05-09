@@ -14,6 +14,11 @@ export class QualsService {
     return qual;
   }
 
+  async getAll(){
+    const quals = await this.qualRepository.findAll()
+    return quals;
+  }
+
   async getQualByValue(value: string){
     const qual = await this.qualRepository.findOne({where: {value}})
     return qual;

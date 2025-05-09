@@ -14,7 +14,10 @@ export class DrivingPlacesService {
   }
 
   async getAllDrivingPlaces() {
-    const drivingPlaces = await this.drivingPlaceRepository.findAll({include:{all: true}});
+    const drivingPlaces = await this.drivingPlaceRepository.findAll({
+      order: [['id', 'ASC']],
+      include:{all: true}
+    });
     return drivingPlaces;
   }
 }

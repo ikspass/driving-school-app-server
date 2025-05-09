@@ -3,21 +3,12 @@ import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model,
 import { Group } from "src/groups/groups.model";
 import { LectureEvent } from "src/lecture_events/lecture_events.model";
 import { Qual } from "src/quals/quals.model";
-import { TeacherQuals } from "src/quals/teacher-quals.model";
+import { TeacherQuals } from "src/teacher_quals/teacher-quals.model";
 import { User } from "src/users/users.model";
 
 interface TeacherCreateAttrs{
-  fullName: string,
-  phoneNumber: string,
-  dateOfEmployment: Date,
-  dateOfBirth: Date,
-}
-
-export enum TeacherStatus {
-  ACTIVE = 'Активен',
-  ON_LEAVE = 'В отпуске',
-  SICK_LEAVE = 'На больничном',
-  FIRED = 'Более не работает'
+  userId: number
+  dateOfEmployment: string
 }
 
 @Table({tableName: 'teachers', updatedAt: false})
@@ -40,8 +31,8 @@ export class Teacher extends Model<Teacher, TeacherCreateAttrs>{
   dateOfEmployment: Date;
 
   @ApiProperty({example: 'В отпуске', description: 'Статус'})
-  @Column({type: DataType.ENUM(...Object.values(TeacherStatus)), defaultValue: TeacherStatus.ACTIVE, allowNull: false})
-  status: TeacherStatus;
+  @Column({type: DataType.STRING, defaultValue: 'Не активен', allowNull: false})
+  status: string;
 
   @BelongsToMany(() => Qual, () => TeacherQuals)
   quals: Qual[];

@@ -1,5 +1,5 @@
 export class CreateDrivingEventDto {
-  readonly date: Date
+  readonly date: string
   readonly time: string
   readonly instructorId: number
   readonly studentId: number

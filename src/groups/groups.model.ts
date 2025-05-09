@@ -3,19 +3,17 @@ import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "
 import { Category } from "src/categories/categories.model";
 import { LectureEvent } from "src/lecture_events/lecture_events.model";
 import { Message } from "src/messages/messages.model";
+import { ScheduleGroup } from "src/schedule_groups/schedule_groups.model";
 import { Student } from "src/students/students.model";
 import { Teacher } from "src/teachers/teachers.model";
 import { TestEvent } from "src/test_events/test_events.model";
 
 interface GroupCreationAttrs{
-  number: string,
+  name: string,
   categoryValue: string,
-  teacherId: string,
-}
-
-enum GroupStatus {
-  ACTIVE = 'Активна',
-  GRADUATED = 'Обучение закончено'
+  teacherId: number,
+  dateOfStart: string,
+  scheduleGroupId: number 
 }
 
 @Table({tableName: 'groups', updatedAt: false})
@@ -31,7 +29,7 @@ export class Group extends Model<Group, GroupCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Идентификатор категории'})
   @ForeignKey(() => Category)
-  @Column({type: DataType.INTEGER, allowNull: false})
+  @Column({type: DataType.INTEGER})
   categoryId: number;
 
   @BelongsTo(() => Category)
@@ -49,11 +47,18 @@ export class Group extends Model<Group, GroupCreationAttrs>{
   @BelongsTo(() => Teacher)
   teacher: Teacher;
 
-  @Column({type: DataType.DATEONLY, allowNull: false})
+  @Column({type: DataType.STRING, allowNull: false})
   dateOfStart: string;
 
-  @Column({type: DataType.ENUM(...Object.values(GroupStatus)), defaultValue: GroupStatus.ACTIVE, allowNull: false})
-  status: GroupStatus;
+  @Column({type: DataType.INTEGER, allowNull: false})
+  @ForeignKey(() => ScheduleGroup)
+  scheduleGroupId: number;
+
+  @BelongsTo(() => ScheduleGroup)
+  scheduleGroup: ScheduleGroup;
+
+  @Column({type: DataType.STRING, defaultValue: 'Активна', allowNull: false})
+  status: string;
 
   @HasMany(() => Student)
   students: Student[];

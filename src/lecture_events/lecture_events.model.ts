@@ -4,10 +4,10 @@ import { Group } from "src/groups/groups.model";
 import { Student } from "src/students/students.model";
 import { Teacher } from "src/teachers/teachers.model";
 import { Topic } from "src/topics/topics.model";
-import { StudentLecture } from "./student-lectures.model";
+import { StudentLecture } from "src/student_lectures/student_lectures.model";
 
 interface LectureEventCreationAttrs{
-  date: Date
+  date: string
   time: string
   teacherId: number
   groupId: number
@@ -22,8 +22,8 @@ export class LectureEvent extends Model<LectureEvent, LectureEventCreationAttrs>
   declare id: number;
 
   @ApiProperty({example: '2025-05-01', description: 'Дата'})
-  @Column({type: DataType.DATEONLY, allowNull: false})
-  date: Date;
+  @Column({type: DataType.STRING, allowNull: false})
+  date: string;
 
   @ApiProperty({example: '18:00:00', description: 'Время'})
   @Column({type: DataType.TIME, allowNull: false, unique: true})
@@ -57,5 +57,5 @@ export class LectureEvent extends Model<LectureEvent, LectureEventCreationAttrs>
   students: Student[];
 
   @HasMany(() => StudentLecture)
-  studentLectures: StudentLecture;
+  studentLectures: StudentLecture[];
 }

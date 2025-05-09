@@ -7,7 +7,7 @@ import { Group } from 'src/groups/groups.model';
 import { Student } from 'src/students/students.model';
 import { Teacher } from 'src/teachers/teachers.model';
 import { Topic } from 'src/topics/topics.model';
-import { StudentLecture } from './student-lectures.model';
+import { StudentLecture } from 'src/student_lectures/student_lectures.model';
 
 @Module({
   controllers: [LectureEventsController],
