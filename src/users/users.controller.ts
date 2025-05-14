@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -31,7 +31,7 @@ export class UsersController {
   }))
   async createUser(@UploadedFile() file: Express.Multer.File, @Body() dto: CreateUserDto) {
     if (file) {
-      dto.img = `static/${file.filename}`; // Сохраняем путь к изображению
+      dto.img = file.filename; // Сохраняем путь к изображению
     }
     return await this.userService.createUser(dto);
   }
@@ -46,10 +46,17 @@ export class UsersController {
     return this.userService.getAllUsers();
   }
 
+  @ApiOperation({summary: 'Получить пользователя по id'})
+  @ApiResponse({status: 200, type: User})
+  @Get(':id')
+  getById(@Param('id') id: string) {
+    return this.userService.getUserById(id);
+  }
+
   @ApiOperation({summary: 'Получить пользователя по idNumber'})
   @ApiResponse({status: 200, type: User})
   @Get()
-  getByValue(@Body() idNumber: string) {
+  getByIdNumber(@Body() idNumber: string) {
     return this.userService.getUserByIdNumber(idNumber);
   }
 }

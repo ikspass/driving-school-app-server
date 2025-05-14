@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, DataType, ForeignKey, HasOne, Model, Table, BelongsTo } from "sequelize-typescript";
+import { Category } from "src/categories/categories.model";
 import { Instructor } from "src/instructors/instructors.model";
 
 interface TransportCreationAttrs{
@@ -39,4 +40,12 @@ export class Transport extends Model<Transport, TransportCreationAttrs>{
 
   @BelongsTo(() => Instructor)
   instructor: Instructor;
+
+  @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
+  @ForeignKey(() => Category)
+  @Column({type: DataType.INTEGER})
+  categoryId: number;
+
+  @BelongsTo(() => Category)
+  category: Category;
 }

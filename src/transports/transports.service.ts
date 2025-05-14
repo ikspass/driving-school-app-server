@@ -2,13 +2,23 @@ import { Injectable } from '@nestjs/common';
 import { CreateTransportDto } from './dto/create-transport.dto';
 import { Transport } from './transports.model';
 import { InjectModel } from '@nestjs/sequelize';
+import { CategoriesService } from 'src/categories/categories.service';
 
 @Injectable()
 export class TransportsService {
-  constructor(@InjectModel(Transport) private transportRepository: typeof Transport) {}
+  constructor(@InjectModel(Transport)
+    private transportRepository: typeof Transport,
+    private categoryService: CategoriesService
+  ) {}
 
   async createTransport(dto: CreateTransportDto) {
     const transport = await this.transportRepository.create(dto)
+    const category = await this.categoryService.getCategoryByValue(dto.categoryValue)
+    if(category){
+      await transport.$set('category', category.id)
+      transport.category = category;
+      await transport.save();
+    }
     return transport;
   }
 
