@@ -4,7 +4,7 @@ import { QualsController } from './quals.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Qual } from './quals.model';
 import { Teacher } from 'src/teachers/teachers.model';
-import { TeacherQuals } from 'src/teacher_quals/teacher-quals.model';
+import { TeacherQuals } from 'src/teacher_quals/teacher_quals.model';
 
 @Module({
   controllers: [QualsController],

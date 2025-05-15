@@ -13,6 +13,6 @@ export class CreateGroupDto {
   @IsString()
   readonly dateOfStart: string
 
-  @IsNumber()
-  readonly scheduleGroupId: number
+  @IsString()
+  readonly scheduleGroupName: string
 }

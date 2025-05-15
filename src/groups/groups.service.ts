@@ -8,12 +8,14 @@ import { Category } from 'src/categories/categories.model';
 import { Teacher } from 'src/teachers/teachers.model';
 import { User } from 'src/users/users.model';
 import { ScheduleGroup } from 'src/schedule_groups/schedule_groups.model';
+import { ScheduleGroupsService } from 'src/schedule_groups/schedule_groups.service';
 
 @Injectable()
 export class GroupsService {
   constructor(@InjectModel(Group) 
   private groupRepository: typeof Group,
-  private categoryService: CategoriesService
+  private categoryService: CategoriesService,
+  private scheduleService: ScheduleGroupsService
 ) {}
 
   async createGroup(dto: CreateGroupDto) {
@@ -22,6 +24,12 @@ export class GroupsService {
     if(category){
       await group.$set('category', category.id)
       group.category = category;
+      await group.save();
+    }
+    const schedule = await this.scheduleService.getScheduleGroupByName(dto.scheduleGroupName);
+    if(schedule){
+      await group.$set('scheduleGroup', schedule.id)
+      group.scheduleGroup = schedule;
       await group.save();
     }
     return group;

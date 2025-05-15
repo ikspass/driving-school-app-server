@@ -17,7 +17,7 @@ export class TeacherQuals extends Model<TeacherQuals, TeacherQualCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор квалификации'})
   @ForeignKey(() => Qual)
   @Column({type: DataType.INTEGER})
-  qualId: number;
+  declare qualId: number;
 
   @BelongsTo(() => Qual)
   qual: Qual;
@@ -25,7 +25,7 @@ export class TeacherQuals extends Model<TeacherQuals, TeacherQualCreationAttrs>{
   @ApiProperty({example: '2', description: 'Идентификатор преподавателя'})
   @ForeignKey(() => Teacher)
   @Column({type: DataType.INTEGER})
-  teacherId: number;
+  declare teacherId: number;
 
   @BelongsTo(() => Teacher)
   teacher: Teacher;

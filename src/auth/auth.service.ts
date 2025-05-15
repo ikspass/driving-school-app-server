@@ -13,6 +13,18 @@ export class AuthService {
     private jwtService: JwtService
   ){}
 
+  async adminLogin(body: {password: string}){
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (body.password === adminPassword) {
+      const payload = { role: { id: 0, value: 'admin', description: 'Администратор'} }; 
+      return {
+        token: this.jwtService.sign(payload)
+      }
+    } else {
+      throw new Error('Неверный пароль');
+    }
+  }
+
   async login(dto: CreateUserDto & {password: string}){
     const user = await this.validateUser(dto);
     return this.generateToken(user);

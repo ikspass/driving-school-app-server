@@ -7,13 +7,14 @@ import { ScheduleGroup } from "src/schedule_groups/schedule_groups.model";
 import { Student } from "src/students/students.model";
 import { Teacher } from "src/teachers/teachers.model";
 import { TestEvent } from "src/test_events/test_events.model";
+import { User } from "src/users/users.model";
 
 interface GroupCreationAttrs{
   name: string,
   categoryValue: string,
   teacherId: number,
   dateOfStart: string,
-  scheduleGroupId: number 
+  scheduleGroupName: string 
 }
 
 @Table({tableName: 'groups', updatedAt: false})
@@ -50,7 +51,7 @@ export class Group extends Model<Group, GroupCreationAttrs>{
   @Column({type: DataType.STRING, allowNull: false})
   dateOfStart: string;
 
-  @Column({type: DataType.INTEGER, allowNull: false})
+  @Column({type: DataType.INTEGER})
   @ForeignKey(() => ScheduleGroup)
   scheduleGroupId: number;
 

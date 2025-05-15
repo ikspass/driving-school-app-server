@@ -1,7 +1,7 @@
 import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 import { Teacher } from "src/teachers/teachers.model";
-import { TeacherQuals } from "src/teacher_quals/teacher-quals.model";
+import { TeacherQuals } from "src/teacher_quals/teacher_quals.model";
 
 interface QualCreationAttrs{
   value: string,
@@ -16,11 +16,11 @@ export class Qual extends Model<Qual, QualCreationAttrs>{
 
   @ApiProperty({example: 'Преподаватель теории', description: 'Квалификация'})
   @Column({type: DataType.STRING, allowNull: false})
-  value: string;
+  declare value: string;
 
   @ApiProperty({example: 'Может проводить лекции', description: 'Описание квалификации'})
   @Column({type: DataType.STRING, allowNull: false})
-  description: string;
+  declare description: string;
 
   @BelongsToMany(() => Teacher, () => TeacherQuals)
   teachers: Teacher[];

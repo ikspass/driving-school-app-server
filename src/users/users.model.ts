@@ -25,40 +25,40 @@ export class User extends Model<User, UserCreationAttrs>{
   
   @ApiProperty({example: '123457890', description: 'Идентификационный номер паспорта'})
   @Column({type: DataType.STRING, unique: true, allowNull: false})
-  idNumber: string;
+  declare idNumber: string;
   
   @ApiProperty({example: 'MC123457890', description: 'Номер паспорта'})
   @Column({type: DataType.STRING, allowNull: false, unique: true})
-  passportNumber: string;
+  declare passportNumber: string;
   
   @ApiProperty({example: '+375291231232', description: 'Номер телефона'})
   @Column({type: DataType.STRING, allowNull: false})
-  phoneNumber: string;
+  declare phoneNumber: string;
   
   @ApiProperty({example: '123457890', description: 'Пароль'})
   @Column({type: DataType.STRING})
-  password: string;
+  declare password: string;
   
   @ApiProperty({example: 'г. Минск, ул. Савицкого, 30-105', description: 'Прописка'})
   @Column({type: DataType.STRING, allowNull: false})
-  adress: string;
+  declare adress: string;
   
   @ApiProperty({example: 'Иванов Иван Иванович', description: 'ФИО'})
   @Column({type: DataType.STRING, allowNull: false})
-  fullName: string;
+  declare fullName: string;
   
   @ApiProperty({example: '2000-09-10', description: 'Дата рождения'})
   @Column({type: DataType.STRING, allowNull: false})
-  dateOfBirth: string;
+  declare dateOfBirth: string;
 
   @ApiProperty({example: 'Фото', description: 'Фото'})
   @Column({type: DataType.STRING, defaultValue: ''})
-  img: string;
+  declare img: string;
 
   @ApiProperty({example: '1', description: 'Роль'})
   @ForeignKey(() => Role)
   @Column({type: DataType.INTEGER})
-  roleId: number;
+  declare roleId: number;
 
   @BelongsTo(() => Role)
   role: Role;

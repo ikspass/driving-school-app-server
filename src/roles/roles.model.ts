@@ -15,11 +15,11 @@ export class Role extends Model<Role, RoleCreationAttrs>{
 
   @ApiProperty({example: 'student', description: 'Роль'})
   @Column({type: DataType.STRING, allowNull: false})
-  value: string;
+  declare value: string;
 
   @ApiProperty({example: 'Курсант', description: 'Описание роли'})
   @Column({type: DataType.STRING, allowNull: false})
-  description: string;
+  declare description: string;
 
   @HasMany(() => User)
   users: User[]

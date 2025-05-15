@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Teacher } from './teachers.model';
 import { QualsService } from 'src/quals/quals.service';
 import { UpdateStatusDto } from './dto/update-status.dto';
+import { Qual } from 'src/quals/quals.model';
 
 @Injectable()
 export class TeachersService {
@@ -14,11 +15,14 @@ export class TeachersService {
     private qualService: QualsService
   ){}
 
-  async createTeacher(dto: CreateTeacherDto) {
+  async createTeacher(dto: CreateTeacherDto, quals: Qual[]) {
     const teacher = await this.teacherRepository.create(dto);
-    const qual = await this.qualService.getQualByValue('theory');
-    if (qual){
-      await teacher.$set('quals', [qual.id])
+    if (quals && quals.length > 0) {
+      // Извлекаем только идентификаторы квалификаций
+      const qualIds = quals.map(qual => qual.description);
+      await teacher.$set('quals', qualIds);
+    } else {
+      console.warn('Квалификации не найдены для установки');
     }
     return teacher;
   }

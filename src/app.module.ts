@@ -34,7 +34,7 @@ import { LectureEvent } from './lecture_events/lecture_events.model';
 import { TestEvent } from './test_events/test_events.model';
 import { Test } from './tests/tests.model';
 import { Topic } from './topics/topics.model';
-import { TeacherQuals } from './teacher_quals/teacher-quals.model';
+import { TeacherQuals } from './teacher_quals/teacher_quals.model';
 import { StudentLecture } from './student_lectures/student_lectures.model';
 import { TestResult } from './test_results/test_results.model';
 import { InstructorCategory } from './instructor_categories/instructor_categories.model';

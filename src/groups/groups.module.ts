@@ -10,13 +10,16 @@ import { Teacher } from 'src/teachers/teachers.model';
 import { TestEvent } from 'src/test_events/test_events.model';
 import { CategoriesModule } from 'src/categories/categories.module';
 import { ScheduleGroup } from 'src/schedule_groups/schedule_groups.model';
+import { ScheduleGroupsModule } from 'src/schedule_groups/schedule_groups.module';
+import { User } from 'src/users/users.model';
 
 @Module({
   controllers: [GroupsController],
   providers: [GroupsService],
   imports: [
     CategoriesModule,
-    SequelizeModule.forFeature([Group, Category, LectureEvent, Student, Teacher, TestEvent, ScheduleGroup])
+    ScheduleGroupsModule,
+    SequelizeModule.forFeature([Group, User, Category, LectureEvent, Student, Teacher, TestEvent, ScheduleGroup])
   ]
 })
 export class GroupsModule {}

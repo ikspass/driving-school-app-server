@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTeacherQualDto } from './dto/create-teacher_qual.dto';
 import { InjectModel } from '@nestjs/sequelize';
-import { TeacherQuals } from './teacher-quals.model';
+import { TeacherQuals } from './teacher_quals.model';
 
 
 

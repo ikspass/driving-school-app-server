@@ -9,6 +9,11 @@ export class AuthController {
 
   constructor(private authService: AuthService) {}
 
+  @Post('/admin-login')
+  adminLogin(@Body() body: {password: string}){
+    return this.authService.adminLogin(body);
+  }
+
   @Post('/login')
   login(@Body() dto: CreateUserDto & {password: string}){
     return this.authService.login(dto);

@@ -9,6 +9,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
   controllers: [ScheduleGroupsController],
   imports: [
     SequelizeModule.forFeature([ScheduleGroup]),
-  ]
+  ],
+  exports:[ScheduleGroupsService]
 })
 export class ScheduleGroupsModule {}

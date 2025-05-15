@@ -8,6 +8,8 @@ import { Group } from 'src/groups/groups.model';
 import { Instructor } from 'src/instructors/instructors.model';
 import { Teacher } from 'src/teachers/teachers.model';
 import { Role } from 'src/roles/roles.model';
+import { TeacherQuals } from 'src/teacher_quals/teacher_quals.model';
+import { Qual } from 'src/quals/quals.model';
 
 @Injectable()
 export class UsersService {
@@ -33,7 +35,7 @@ export class UsersService {
       order: [['id', 'ASC']],
       include: [
         {model: Student, include: [Group, Instructor]},
-        {model: Teacher, include: []},
+        {model: Teacher, include: [Qual]},
         {model: Instructor, include: []},
         {model: Role},
       ]});
@@ -41,12 +43,27 @@ export class UsersService {
   }
 
   async getUserById(id: string){
-    const user = await this.userRepository.findByPk(id);
+    const user = await this.userRepository.findByPk(id, {
+      include: [
+        {model: Student, include: [Group, Instructor]},
+        {model: Teacher, include: [Qual]},
+        {model: Instructor, include: []},
+        {model: Role},
+      ]
+    });
     return user;
   }
-  
+
   async getUserByIdNumber(idNumber: string){
-    const user = await this.userRepository.findOne({where: {idNumber}, include: {all: true}});
+    const user = await this.userRepository.findOne({
+      where: {idNumber}, 
+      include: [
+        {model: Student, include: [Group, Instructor]},
+        {model: Teacher, include: [Qual]},
+        {model: Instructor, include: []},
+        {model: Role},
+      ]
+    });
     return user;
   }
 }

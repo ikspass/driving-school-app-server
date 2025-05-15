@@ -20,4 +20,9 @@ export class ScheduleGroupsService {
     });
     return scheduleGroups;
   }
+
+  async getScheduleGroupByName(name: string){
+    const scheduleGroup = await this.scheduleGroupRepository.findOne({where: {name}})
+    return scheduleGroup;
+  }
 }

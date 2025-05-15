@@ -15,4 +15,9 @@ export class ScheduleGroupsController {
   getAll() {
     return this.scheduleGroupService.getAllScheduleGroups();
   }
+
+  @Get()
+  getByName(@Body() name: string) {
+    return this.scheduleGroupService.getScheduleGroupByName(name);
+  }
 }
