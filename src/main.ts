@@ -24,8 +24,8 @@ async function start() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
 
-  return await app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
+  await app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
 }
 
 
-export default start;
+start;
