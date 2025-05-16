@@ -90,7 +90,13 @@ import pg from 'pg'
         ScheduleGroup,
         StudentLecture
       ],
-      autoLoadModels: true
+      autoLoadModels: true,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      },
     }),
     StudentsModule,
     InstructorsModule,
