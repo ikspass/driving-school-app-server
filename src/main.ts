@@ -27,4 +27,4 @@ async function start() {
   await app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
 }
 
-start();
+export default start();
