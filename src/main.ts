@@ -5,7 +5,7 @@ import * as cors from 'cors';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-async function start() {
+export default async function start() {
   const PORT = process.env.PORT || 5000;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
@@ -27,4 +27,4 @@ async function start() {
   await app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
 }
 
-export default start();
+start();
