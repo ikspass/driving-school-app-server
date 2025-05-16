@@ -52,12 +52,14 @@ import { TestResultsModule } from './test_results/test_results.module';
 import { StudentLecturesModule } from './student_lectures/student_lectures.module';
 import { StudentTestsModule } from './student_tests/student_tests.module';
 import { StudentTest } from './student_tests/student_tests.model';
+import pg from 'pg'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     SequelizeModule.forRoot({
       dialect: 'postgres',
+      dialectModule: pg,
       host: process.env.POSTGRES_HOST,
       port: Number(process.env.POSTGRES_PORT),
       username: process.env.POSTGRES_USER,
