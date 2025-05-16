@@ -5,8 +5,8 @@ import * as cors from 'cors';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-export default async function start() {
-  const PORT = process.env.PORT || 3000;
+async function start() {
+  const PORT = process.env.PORT || 5000;
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // Настройка статических файлов
