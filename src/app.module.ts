@@ -55,9 +55,7 @@ import { StudentTest } from './student_tests/student_tests.model';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV}.env`
-    }),
+    ConfigModule.forRoot(),
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: process.env.POSTGRES_HOST,
