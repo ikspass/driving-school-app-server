@@ -23,6 +23,7 @@ async function start() {
   app.use(cors({
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
   }));
 
   await app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
