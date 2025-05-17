@@ -16,4 +16,9 @@ export class LectureEventsController {
   findAll() {
     return this.lectureLessonsService.getAllLectureEvents();
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.lectureLessonsService.delete(id);
+  }
 }

@@ -26,4 +26,8 @@ export class TeacherQualsService {
     });
     return teacherQuals;  
   }
+
+  async delete(id: string) {
+    return this.teacherQualRepository.destroy({ where: { id } });
+  }
 }

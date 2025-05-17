@@ -20,4 +20,9 @@ export class CategoriesController {
   getByValue(@Param('value') value: string){
     return this.categoriesService.getCategoryByValue(value)
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.categoriesService.delete(id);
+  }
 }

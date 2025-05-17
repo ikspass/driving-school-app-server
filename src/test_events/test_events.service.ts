@@ -28,4 +28,8 @@ export class TestEventsService {
     });
     return testEvents;
   }
+
+  async deleteTestEvent(id: string) {
+    return this.testEventRepository.destroy({ where: { id } });
+  }
 }

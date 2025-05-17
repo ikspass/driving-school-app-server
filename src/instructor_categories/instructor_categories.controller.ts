@@ -15,4 +15,9 @@ export class InstructorCategoriesController {
   findAll() {
     return this.instructorCategoriesService.findAllInstructorCategories();
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.instructorCategoriesService.delete(id);
+  }
 }

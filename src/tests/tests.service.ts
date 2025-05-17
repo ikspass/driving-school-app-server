@@ -17,4 +17,8 @@ export class TestsService {
     const tests = await this.testRepository.findAll({include:{all: true}});
     return tests;
   }
+
+  async deleteTest(id: string) {
+    return this.testRepository.destroy({ where: { id } });
+  }
 }

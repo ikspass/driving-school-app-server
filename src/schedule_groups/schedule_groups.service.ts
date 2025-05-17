@@ -25,4 +25,8 @@ export class ScheduleGroupsService {
     const scheduleGroup = await this.scheduleGroupRepository.findOne({where: {name}})
     return scheduleGroup;
   }
+
+  async delete(id: string) {
+    return this.scheduleGroupRepository.destroy({ where: { id } });
+  }
 }

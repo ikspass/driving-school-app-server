@@ -17,4 +17,9 @@ export class ChaptersService {
     const chapters = await this.chapterRepository.findAll({include:{all: true}});
     return chapters;
   }
+
+
+  async delete(id: string) {
+    return this.chapterRepository.destroy({ where: { id } });
+  }
 }

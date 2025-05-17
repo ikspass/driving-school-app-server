@@ -24,4 +24,8 @@ export class StudentLecturesService {
     });
     return studentLectures;
   }
+
+  async delete(id: string) {
+    return this.studentLectureRepository.destroy({ where: { id } });
+  }
 }

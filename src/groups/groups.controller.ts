@@ -16,4 +16,14 @@ export class GroupsController {
   findAll() {
     return this.groupsService.getAllGroups();
   }
+
+  @Get(':id')
+  getGroupById(@Param('id') id: number) {
+    return this.groupsService.getGroupById(id);
+  } 
+
+  @Delete(':id')  // Метод для удаления группы
+  deleteGroup(@Param('id') id: string) {
+    return this.groupsService.deleteGroup(id);
+  }
 }

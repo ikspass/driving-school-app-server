@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -58,5 +58,10 @@ export class UsersController {
   @Get()
   getByIdNumber(@Body() idNumber: string) {
     return this.userService.getUserByIdNumber(idNumber);
+  }
+
+  @Delete(':id')  // Метод для удаления группы
+  deleteUser(@Param('id') id: string) {
+    return this.userService.deleteUser(id);
   }
 }

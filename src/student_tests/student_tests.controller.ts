@@ -7,12 +7,17 @@ export class StudentTestsController {
   constructor(private readonly studentTestsService: StudentTestsService) {}
 
   @Post()
-  create(@Body() createStudentTestDto: CreateStudentTestDto) {
-    return this.studentTestsService.create(createStudentTestDto);
+  create(@Body() dto: CreateStudentTestDto) {
+    return this.studentTestsService.create(dto);
   }
 
   @Get()
   findAll() {
-    return this.studentTestsService.findAll();
+    return this.studentTestsService.findAll()
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.studentTestsService.delete(id);
   }
 }

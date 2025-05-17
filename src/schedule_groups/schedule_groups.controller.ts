@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ScheduleGroupsService } from './schedule_groups.service';
 import { CreateScheduleGroupDto } from './dto/create-schedule_group.dto';
 
@@ -19,5 +19,10 @@ export class ScheduleGroupsController {
   @Get()
   getByName(@Body() name: string) {
     return this.scheduleGroupService.getScheduleGroupByName(name);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.scheduleGroupService.delete(id);
   }
 }

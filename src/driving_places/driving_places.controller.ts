@@ -16,4 +16,9 @@ export class DrivingPlacesController {
   findAll() {
     return this.drivingPlacesService.getAllDrivingPlaces();
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.drivingPlacesService.delete(id);
+  }
 }

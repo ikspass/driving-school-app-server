@@ -15,4 +15,9 @@ export class TeacherQualsController {
   findAll() {
     return this.teacherQualsService.findAllTeacherQuals();
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.teacherQualsService.delete(id);
+  }
 }

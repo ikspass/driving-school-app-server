@@ -17,4 +17,8 @@ export class RolesService {
     const role = await this.roleRepository.findOne({where: {value}})
     return role;
   }
+
+  async delete(id: string) {
+    return this.roleRepository.destroy({ where: { id } });
+  }
 }

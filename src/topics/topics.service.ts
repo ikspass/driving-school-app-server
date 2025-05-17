@@ -18,4 +18,8 @@ export class TopicsService {
     const topics = await this.topicRepository.findAll({include:{all: true}});
     return topics;
   }
+
+  async deleteTopic(id: string) {
+    return this.topicRepository.destroy({ where: { id } });
+  }
 }

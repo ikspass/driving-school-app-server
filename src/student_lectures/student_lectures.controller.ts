@@ -15,4 +15,9 @@ export class StudentLecturesController {
   findAll() {
     return this.studentLecturesService.findAll();
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.studentLecturesService.delete(id);
+  }
 }

@@ -23,4 +23,8 @@ export class TestResultsService {
     });
     return tests;
   }
+
+  async deleteTestResult(id: string) {
+    return this.testResultRepository.destroy({ where: { id } });
+  }
 }

@@ -21,4 +21,9 @@ export class QualsController {
   getByValue(@Param('value') value: string) {
     return this.qualsService.getQualByValue(value);
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.qualsService.delete(id);
+  }
 }

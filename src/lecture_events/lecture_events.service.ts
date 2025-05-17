@@ -31,4 +31,8 @@ export class LectureEventsService {
     });
     return lectureEvents;
   }
+
+  async delete(id: string) {
+    return this.lectureEventRepository.destroy({ where: { id } });
+  }
 }

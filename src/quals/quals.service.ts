@@ -23,4 +23,8 @@ export class QualsService {
     const qual = await this.qualRepository.findOne({where: {value}})
     return qual;
   }
+
+  async delete(id: string) {
+    return this.qualRepository.destroy({ where: { id } });
+  }
 }

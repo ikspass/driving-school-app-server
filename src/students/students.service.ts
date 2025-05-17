@@ -57,4 +57,8 @@ export class StudentsService {
 
     return student;
   }
+
+  async delete(id: string) {
+    return this.studentRepository.destroy({ where: { id } });
+  }
 }

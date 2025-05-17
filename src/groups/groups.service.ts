@@ -46,4 +46,19 @@ export class GroupsService {
     });
     return groups;
   }
+
+  async getGroupById(id: number){
+    const group = await this.groupRepository.findByPk(id, {
+      include: [
+        {model: Category},
+        {model: ScheduleGroup},
+        {model: Teacher, include: [User]}
+      ]
+    })
+    return group;
+  }
+
+  async deleteGroup(id: string) {
+    return this.groupRepository.destroy({ where: { id } });
+  }
 }

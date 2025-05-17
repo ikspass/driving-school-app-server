@@ -16,4 +16,9 @@ export class TestsController {
   findAll() {
     return this.testsService.getAllTests();
   }
+
+  @Delete(':id')
+  deleteTest(@Param('id') id: string) {
+    return this.testsService.deleteTest(id);
+  }
 }

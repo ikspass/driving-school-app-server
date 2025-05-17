@@ -16,4 +16,9 @@ export class TeachersController {
   getAll() {
     return this.teachersService.getAllTeachers();
   }
+
+  @Delete(':id')  // Метод для удаления группы
+  deleteTeacher(@Param('id') id: string) {
+    return this.teachersService.deleteTeacher(id);
+  }
 }

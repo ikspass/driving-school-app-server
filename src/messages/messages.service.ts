@@ -17,4 +17,8 @@ export class MessagesService {
     const messages = await this.messageRepository.findAll({include:{all: true}});
     return messages;
   }
+
+  async delete(id: string) {
+    return this.messageRepository.destroy({ where: { id } });
+  }
 }

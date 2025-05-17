@@ -28,4 +28,8 @@ export class TransportsService {
       include: {all: true}});
     return transport;
   }
+
+  async deleteTransport(id: string) {
+    return this.transportRepository.destroy({ where: { id } });
+  }
 }

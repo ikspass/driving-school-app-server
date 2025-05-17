@@ -16,4 +16,9 @@ export class DrivingEventsController {
   findAll() {
     return this.drivingEventsService.getAllDrivingEvents();
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.drivingEventsService.delete(id);
+  }
 }

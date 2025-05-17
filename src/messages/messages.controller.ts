@@ -16,4 +16,9 @@ export class MessagesController {
   findAll() {
     return this.messagesService.getAllMessages();
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.messagesService.delete(id);
+  }
 }

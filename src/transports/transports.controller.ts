@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { TransportsService } from './transports.service';
 import { CreateTransportDto } from './dto/create-transport.dto';
 
@@ -14,5 +14,10 @@ export class TransportsController {
   @Get()
   getAll() {
     return this.transportService.getAllTransports();
+  }
+
+  @Delete(':id')
+  deleteTransport(@Param('id') id: string) {
+    return this.transportService.deleteTransport(id);
   }
 }

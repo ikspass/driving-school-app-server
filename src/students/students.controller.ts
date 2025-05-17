@@ -32,4 +32,9 @@ export class StudentsController {
   async updateStatus(@Param('id') id: number, @Body() dto: UpdateStatusDto) {
     return this.studentsService.updateStudentStatus(id, dto);
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.studentsService.delete(id);
+  }
 }

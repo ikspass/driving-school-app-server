@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { InstructorsService } from './instructors.service';
 import { CreateInstructorDto } from './dto/create-instructor.dto';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
@@ -35,4 +35,9 @@ export class InstructorsController {
   // remove(@Param('id') id: string) {
   //   return this.instructorsService.remove(+id);
   // }
+  
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.instructorsService.delete(id);
+  }
 }

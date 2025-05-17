@@ -66,4 +66,8 @@ export class UsersService {
     });
     return user;
   }
+
+  async deleteUser(id: string) {
+    return this.userRepository.destroy({ where: { id } });
+  }
 }

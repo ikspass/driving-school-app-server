@@ -25,4 +25,8 @@ export class InstructorCategoriesService {
     });
     return instructorCategories;  
   }
+
+  async delete(id: string) {
+    return this.instructorCategoryRepository.destroy({ where: { id } });
+  }
 }

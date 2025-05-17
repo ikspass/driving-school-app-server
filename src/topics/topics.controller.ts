@@ -16,4 +16,9 @@ export class TopicsController {
   findAll() {
     return this.topicsService.getAllTopics();
   }
+
+  @Delete(':id')
+  deleteTopic(@Param('id') id: string) {
+    return this.topicsService.deleteTopic(id);
+  }
 }

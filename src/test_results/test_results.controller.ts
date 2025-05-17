@@ -15,4 +15,9 @@ export class TestResultsController {
   findAll() {
     return this.testResultsService.findAll();
   }
+
+  @Delete(':id')
+  deleteTestResult(@Param('id') id: string) {
+    return this.testResultsService.deleteTestResult(id);
+  }
 }

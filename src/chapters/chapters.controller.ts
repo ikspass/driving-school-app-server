@@ -16,4 +16,9 @@ export class ChaptersController {
   findAll() {
     return this.chaptersService.getAllChapters();
   }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.chaptersService.delete(id);
+  }
 }

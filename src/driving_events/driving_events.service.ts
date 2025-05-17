@@ -33,4 +33,8 @@ export class DrivingEventsService {
     });
     return drivingEvents;
   }
+
+  async delete(id: string) {
+    return this.drivingEventRepository.destroy({ where: { id } });
+  }
 }

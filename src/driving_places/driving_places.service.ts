@@ -20,4 +20,8 @@ export class DrivingPlacesService {
     });
     return drivingPlaces;
   }
+
+  async delete(id: string) {
+    return this.drivingPlaceRepository.destroy({ where: { id } });
+  }
 }

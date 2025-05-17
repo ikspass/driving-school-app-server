@@ -24,4 +24,8 @@ export class CategoriesService {
     console.log('category', category)
     return category;
   }
+
+  async delete(id: string) {
+    return this.categoryRepository.destroy({ where: { id } });
+  }
 }
