@@ -22,7 +22,7 @@ export class GroupsController {
     return this.groupsService.getGroupById(id);
   } 
 
-  @Delete(':id')  // Метод для удаления группы
+  @Delete(':id')
   deleteGroup(@Param('id') id: string) {
     return this.groupsService.deleteGroup(id);
   }

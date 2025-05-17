@@ -9,6 +9,10 @@ import { Teacher } from 'src/teachers/teachers.model';
 import { User } from 'src/users/users.model';
 import { ScheduleGroup } from 'src/schedule_groups/schedule_groups.model';
 import { ScheduleGroupsService } from 'src/schedule_groups/schedule_groups.service';
+import { Student } from 'src/students/students.model';
+import { TestEvent } from 'src/test_events/test_events.model';
+import { LectureEvent } from 'src/lecture_events/lecture_events.model';
+import { Message } from 'src/messages/messages.model';
 
 @Injectable()
 export class GroupsService {
@@ -41,7 +45,11 @@ export class GroupsService {
       include:[
         {model: Category},
         {model: ScheduleGroup},
-        {model: Teacher, include: [User]}
+        {model: Teacher, include: [User]},
+        {model: Student},
+        {model: TestEvent},
+        {model: LectureEvent},
+        {model: Message},
       ]
     });
     return groups;
@@ -52,7 +60,11 @@ export class GroupsService {
       include: [
         {model: Category},
         {model: ScheduleGroup},
-        {model: Teacher, include: [User]}
+        {model: Teacher, include: [User]},
+        {model: Student},
+        {model: TestEvent},
+        {model: LectureEvent},
+        {model: Message},
       ]
     })
     return group;
