@@ -16,11 +16,11 @@ export class DrivingPlace extends Model<DrivingPlace, DrivingPlaceCreationAttrs>
 
   @ApiProperty({example: 'autodrome', description: 'Значение'})
   @Column({type: DataType.STRING, allowNull: false})
-  value: string;
+  declare value: string;
 
   @ApiProperty({example: 'Автодром', description: 'Описание'})
   @Column({type: DataType.STRING, allowNull: false})
-  description: string;
+  declare description: string;
 
   @HasMany(() => DrivingEvent)
   drivingEvents: DrivingEvent[];

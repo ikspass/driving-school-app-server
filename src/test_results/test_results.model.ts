@@ -20,7 +20,7 @@ export class TestResult extends Model<TestResult, TestResultCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор пользователя'})
   @ForeignKey(() => Student)
   @Column({type: DataType.INTEGER, allowNull: false})
-  studentId: number;
+  declare studentId: number;
 
   @BelongsTo(() => Student, {as: 'testResultStudentInfo'})
   student: Student;
@@ -28,7 +28,7 @@ export class TestResult extends Model<TestResult, TestResultCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор зачёта'})
   @ForeignKey(() => Test)
   @Column({type: DataType.INTEGER, allowNull: false})
-  testId: number;
+  declare testId: number;
 
   @BelongsTo(() => Test)
   test: Test;
@@ -36,24 +36,24 @@ export class TestResult extends Model<TestResult, TestResultCreationAttrs>{
   @ApiProperty({ example: '1', description: 'Идентификатор события теста' })
   @ForeignKey(() => TestEvent)
   @Column({ type: DataType.INTEGER, allowNull: false })
-  testEventId: number;
+  declare testEventId: number;
 
   @BelongsTo(() => TestEvent)
   testEvent: TestEvent;
 
   @ApiProperty({example: 'Сдан', description: 'Статус'})
   @Column({type: DataType.STRING, defaultValue: 'В будущем', allowNull: false})
-  status: string;
+  declare status: string;
 
   @ApiProperty({example: '2025-04-28', description: 'Дата'})
   @Column({type: DataType.TIME, allowNull: false})
-  time: string;
+  declare time: string;
 
   @ApiProperty({example: '2025-04-28', description: 'Время'})
   @Column({type: DataType.DATEONLY, allowNull: false})
-  date: Date;
+  declare date: Date;
 
   @ApiProperty({example: '3', description: 'Количество попыток'})
   @Column({type: DataType.INTEGER, allowNull: false, defaultValue: 0})
-  retries: number;
+  declare retries: number;
 }

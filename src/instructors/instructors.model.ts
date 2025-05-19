@@ -22,18 +22,18 @@ export class Instructor extends Model<Instructor, InstructorCreateAttrs>{
   @ApiProperty({example: '1', description: 'Уникальный идентификатор пользователя'})
   @ForeignKey(() => User)
   @Column({type: DataType.INTEGER, unique: true})
-  userId: number;
+  declare userId: number;
 
   @BelongsTo(() => User)
   user: User;
 
   @ApiProperty({example: 'Более не работает', description: 'Статус'})
   @Column({type: DataType.STRING, defaultValue: 'Не активен', allowNull: false})
-  status: string;
+  declare status: string;
   
   @ApiProperty({example: '2025-04-28', description: 'Дата приёма на работу'})
   @Column({type: DataType.STRING, allowNull: false})
-  dateOfEmployment: string;
+  declare dateOfEmployment: string;
   
   @HasMany(() => Transport)
   transports: Transport[];

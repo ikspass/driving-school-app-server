@@ -23,16 +23,16 @@ export class LectureEvent extends Model<LectureEvent, LectureEventCreationAttrs>
 
   @ApiProperty({example: '2025-05-01', description: 'Дата'})
   @Column({type: DataType.STRING, allowNull: false})
-  date: string;
+  declare date: string;
 
   @ApiProperty({example: '18:00:00', description: 'Время'})
   @Column({type: DataType.TIME, allowNull: false, unique: true})
-  time: string;
+  declare time: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор преподавателя'})
   @ForeignKey(() => Teacher)
   @Column({type: DataType.INTEGER, allowNull: false})
-  teacherId: number;
+  declare teacherId: number;
 
   @BelongsTo(() => Teacher)
   teacher: Teacher;
@@ -40,7 +40,7 @@ export class LectureEvent extends Model<LectureEvent, LectureEventCreationAttrs>
   @ApiProperty({example: '1', description: 'Идентификатор группы'})
   @ForeignKey(() => Group)
   @Column({type: DataType.INTEGER, allowNull: false})
-  groupId: number;
+  declare groupId: number;
 
   @BelongsTo(() => Group)
   group: Group;
@@ -48,7 +48,7 @@ export class LectureEvent extends Model<LectureEvent, LectureEventCreationAttrs>
   @ApiProperty({example: '1', description: 'Идентификатор темы'})
   @ForeignKey(() => Topic)
   @Column({type: DataType.INTEGER, allowNull: false})
-  topicId: number;
+  declare topicId: number;
   
   @BelongsTo(() => Topic)
   topic: Topic;

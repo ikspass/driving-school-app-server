@@ -16,13 +16,13 @@ export class ScheduleGroup extends Model<ScheduleGroup, ScheduleGroupCreateAttrs
   
   @ApiProperty({example: 'Утренняя', description: 'Название группы'})
   @Column({ type: DataType.STRING, allowNull: false })
-  name: string;
+  declare name: string;
   
   @ApiProperty({example: '8:00', description: 'Самое раннее время'})
   @Column({type: DataType.STRING, allowNull: false})
-  minTime: string;
+  declare minTime: string;
 
   @ApiProperty({example: '12:00', description: 'Самое позднее время'})
   @Column({type: DataType.STRING, allowNull: false})
-  maxTime: string;
+  declare maxTime: string;
 }

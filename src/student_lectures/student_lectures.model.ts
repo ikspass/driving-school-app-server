@@ -18,7 +18,7 @@ export class StudentLecture extends Model<StudentLecture, StudentLectureCreation
   @ApiProperty({example: '1', description: 'Идентификатор курсанта'})
   @ForeignKey(() => Student)
   @Column({type: DataType.INTEGER, allowNull: false})
-  studentId: number;
+  declare studentId: number;
 
   @BelongsTo(() => Student, {as: 'studentLectureStudentInfo'})
   student: Student;
@@ -26,12 +26,12 @@ export class StudentLecture extends Model<StudentLecture, StudentLectureCreation
   @ApiProperty({example: '1', description: 'Идентификатор лекции'})
   @ForeignKey(() => LectureEvent)
   @Column({type: DataType.INTEGER, allowNull: false})
-  lectureId: number;
+  declare lectureId: number;
 
   @BelongsTo(() => LectureEvent)
   lecture: LectureEvent;
 
   @ApiProperty({example: 'true', description: 'Признак посещаемости'})
   @Column({type: DataType.BOOLEAN})
-  attended: boolean;
+  declare attended: boolean;
 }

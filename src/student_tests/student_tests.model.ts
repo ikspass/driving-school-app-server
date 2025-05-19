@@ -18,7 +18,7 @@ export class StudentTest extends Model<StudentTest, StudentTestCreatioAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор курсанта'})
   @ForeignKey(() => Student)
   @Column({type: DataType.INTEGER, allowNull: false})
-  studentId: number;
+  declare studentId: number;
 
   @BelongsTo(() => Student, { as: 'studentTest' }) // Уникальный псевдоним
   student: Student;
@@ -26,12 +26,12 @@ export class StudentTest extends Model<StudentTest, StudentTestCreatioAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор зачёта'})
   @ForeignKey(() => TestEvent)
   @Column({type: DataType.INTEGER, allowNull: false})
-  testId: number;
+  declare testId: number;
 
   @BelongsTo(() => TestEvent)
   test: TestEvent;
 
   @ApiProperty({example: 'true', description: 'Признак посещаемости'})
   @Column({type: DataType.BOOLEAN})
-  attended: boolean;
+  declare attended: boolean;
 }

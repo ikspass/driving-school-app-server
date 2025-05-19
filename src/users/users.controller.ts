@@ -60,7 +60,7 @@ export class UsersController {
     return this.userService.getUserByIdNumber(idNumber);
   }
 
-  @Delete(':id')  // Метод для удаления группы
+  @Delete(':id')
   deleteUser(@Param('id') id: string) {
     return this.userService.deleteUser(id);
   }

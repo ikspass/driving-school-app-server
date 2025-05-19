@@ -20,11 +20,11 @@ export class Category extends Model<Category, CategoryCreationAttrs>{
 
   @ApiProperty({example: 'B', description: 'Значение'})
   @Column({type: DataType.STRING, allowNull: false})
-  value: string;
+  declare value: string;
 
   @ApiProperty({example: 'Легковые автомобили до 3,5 тонн', description: 'Описание'})
   @Column({type: DataType.STRING, allowNull: false})
-  description: string;
+  declare description: string;
   
   @BelongsToMany(() => Instructor, () => InstructorCategory)
   instructors: Instructor[]

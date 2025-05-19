@@ -10,7 +10,7 @@ interface TestCreationAttrs {
   categoryValue: string;
 }
 
-@Table({ tableName: 'tests', updatedAt: false })
+@Table({ tableName: 'tests', updatedAt: false, createdAt: false })
 export class Test extends Model<Test, TestCreationAttrs> {
 
   @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
@@ -18,17 +18,17 @@ export class Test extends Model<Test, TestCreationAttrs> {
   declare id: number;
 
   @ApiProperty({ example: 'Зачёт 1', description: 'Название зачёта' })
-  @Column({ type: DataType.STRING, allowNull: false })
-  name: string;
+  @Column({ type: DataType.STRING, allowNull: false, unique: true})
+  declare name: string;
 
   @ApiProperty({ example: 'Зачёт по теории', description: 'Описание зачёта' })
   @Column({ type: DataType.STRING, allowNull: false })
-  description: string;
+  declare description: string;
 
   @ApiProperty({ example: '1', description: 'Идентификатор категории' })
   @ForeignKey(() => Category)
-  @Column({ type: DataType.INTEGER, allowNull: false })
-  categoryId: number;
+  @Column({ type: DataType.INTEGER})
+  declare categoryId: number;
 
   @BelongsTo(() => Category)
   category: Category;

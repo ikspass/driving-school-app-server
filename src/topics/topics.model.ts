@@ -17,7 +17,7 @@ export class Topic extends Model<Topic, TopicCreateAttrs>{
   @ForeignKey(() => User)
   @ApiProperty({example: 'Тема 1', description: 'Название темы'})
   @Column({ type: DataType.STRING, allowNull: false })
-  name: string;
+  declare name: string;
 
   @HasMany(() => Chapter)
   chapters: Chapter;

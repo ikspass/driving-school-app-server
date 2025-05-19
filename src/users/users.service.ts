@@ -10,6 +10,9 @@ import { Teacher } from 'src/teachers/teachers.model';
 import { Role } from 'src/roles/roles.model';
 import { TeacherQuals } from 'src/teacher_quals/teacher_quals.model';
 import { Qual } from 'src/quals/quals.model';
+import { Transport } from 'src/transports/transports.model';
+import { Category } from 'src/categories/categories.model';
+import { ScheduleGroup } from 'src/schedule_groups/schedule_groups.model';
 
 @Injectable()
 export class UsersService {
@@ -34,9 +37,9 @@ export class UsersService {
     const users = await this.userRepository.findAll({
       order: [['id', 'ASC']],
       include: [
-        {model: Student, include: [Group, Instructor]},
-        {model: Teacher, include: [Qual]},
-        {model: Instructor, include: []},
+        {model: Student, include: [{model: Group, include: [Category, ScheduleGroup]}, {model: Instructor, include: [{model: Transport, include: [Category]}]}]},
+        {model: Teacher, include: [{model: Group, include: [Category, ScheduleGroup]}, Qual]},
+        {model: Instructor, include: [{model: Transport, include: [Category]}]},
         {model: Role},
       ]});
     return users;
@@ -45,9 +48,9 @@ export class UsersService {
   async getUserById(id: string){
     const user = await this.userRepository.findByPk(id, {
       include: [
-        {model: Student, include: [Group, Instructor]},
-        {model: Teacher, include: [Qual]},
-        {model: Instructor, include: []},
+        {model: Student, include: [{model: Group, include: [Category, ScheduleGroup]}, {model: Instructor, include: [{model: Transport, include: [Category]}]}]},
+        {model: Teacher, include: [{model: Group, include: [Category, ScheduleGroup]}, Qual]},
+        {model: Instructor, include: [{model: Transport, include: [Category]}]},
         {model: Role},
       ]
     });

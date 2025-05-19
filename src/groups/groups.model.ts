@@ -26,12 +26,12 @@ export class Group extends Model<Group, GroupCreationAttrs>{
 
   @ApiProperty({example: '17B', description: 'Имя группы'})
   @Column({type: DataType.STRING, allowNull: false})
-  name: string;
+  declare name: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор категории'})
   @ForeignKey(() => Category)
   @Column({type: DataType.INTEGER})
-  categoryId: number;
+  declare categoryId: number;
 
   @BelongsTo(() => Category)
   category: Category;
@@ -39,27 +39,27 @@ export class Group extends Model<Group, GroupCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор преподавателя'})
   @ForeignKey(() => Teacher)
   @Column({type: DataType.INTEGER, allowNull: false})
-  teacherId: number;
+  declare teacherId: number;
 
   @ApiProperty({example: '1', description: 'Количество студентов'})
   @Column({type: DataType.INTEGER, allowNull: false, defaultValue: 0})
-  studentsCount: number;
+  declare studentsCount: number;
 
   @BelongsTo(() => Teacher)
   teacher: Teacher;
 
   @Column({type: DataType.STRING, allowNull: false})
-  dateOfStart: string;
+  declare dateOfStart: string;
 
   @Column({type: DataType.INTEGER})
   @ForeignKey(() => ScheduleGroup)
-  scheduleGroupId: number;
+  declare scheduleGroupId: number;
 
   @BelongsTo(() => ScheduleGroup)
   scheduleGroup: ScheduleGroup;
 
   @Column({type: DataType.STRING, defaultValue: 'Активна', allowNull: false})
-  status: string;
+  declare status: string;
 
   @HasMany(() => Student)
   students: Student[];

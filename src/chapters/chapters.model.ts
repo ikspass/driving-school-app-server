@@ -18,16 +18,16 @@ export class Chapter extends Model<Chapter, ChapterCreateAttrs>{
   
   @ApiProperty({example: 'Раздел 1', description: 'Название раздела'})
   @Column({ type: DataType.STRING, allowNull: false })
-  name: string;
+  declare name: string;
   
   @ApiProperty({example: 'Текст', description: 'Содержание раздела'})
   @Column({type: DataType.STRING, allowNull: false})
-  value: string;
+  declare value: string;
   
   @ApiProperty({example: '1', description: 'Идентификатор темы'})
   @ForeignKey(() => Topic)
   @Column({type: DataType.INTEGER, allowNull: false})
-  topicId: number;
+  declare topicId: number;
 
   @BelongsTo(() => Topic)
   topic: Topic;
@@ -35,7 +35,7 @@ export class Chapter extends Model<Chapter, ChapterCreateAttrs>{
   @ApiProperty({ example: '1', description: 'Идентификатор теста' })
   @ForeignKey(() => Test)
   @Column({ type: DataType.INTEGER, allowNull: false })
-  testId: number;
+  declare testId: number;
 
   @BelongsTo(() => Test)
   test: Test;

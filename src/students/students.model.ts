@@ -25,19 +25,19 @@ export class Student extends Model<Student, StudentCreationAttrs>{
   @ApiProperty({example: '1', description: 'Уникальный идентификатор пользователя'})
   @ForeignKey(() => User)
   @Column({type: DataType.INTEGER, unique: true})
-  userId: number;
+  declare userId: number;
 
   @BelongsTo(() => User)
   user: User;
   
   @ApiProperty({example: 'Активен', description: 'Статус'})
   @Column({type: DataType.STRING, defaultValue: 'Не активен', allowNull: false})
-  status: string;
+  declare status: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
   @ForeignKey(() => Instructor)
   @Column({type: DataType.INTEGER})
-  instructorId: number;
+  declare instructorId: number;
 
   @BelongsTo(() => Instructor)
   instructor: Instructor;
@@ -45,7 +45,7 @@ export class Student extends Model<Student, StudentCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор группы'})
   @ForeignKey(() => Group)
   @Column({type: DataType.INTEGER})
-  groupId: number;
+  declare groupId: number;
 
   @BelongsTo(() => Group)
   group: Group;
@@ -53,7 +53,7 @@ export class Student extends Model<Student, StudentCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор категории'})
   @ForeignKey(() => Category)
   @Column({type: DataType.INTEGER})
-  categoryId: number;
+  declare categoryId: number;
 
   @BelongsTo(() => Category)
   category: Category;

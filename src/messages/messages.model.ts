@@ -20,20 +20,20 @@ export class Message extends Model<Message, MessageCreateAttrs>{
   
   @ApiProperty({example: '2025-04-28', description: 'Дата'})
   @Column({ type: DataType.DATEONLY, allowNull: false })
-  date: Date;
+  declare date: Date;
 
   @ApiProperty({example: '16:30:00', description: 'Время'})
   @Column({ type: DataType.TIME, allowNull: false })
-  time: string;
+  declare time: string;
 
   @ApiProperty({example: 'Преподаватель Иванов Иван Иванович на больничном', description: 'Текст'})
   @Column({ type: DataType.STRING, allowNull: false })
-  text: string;
+  declare text: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор группы'})
   @ForeignKey(() => Group)
   @Column({ type: DataType.INTEGER, allowNull: false })
-  groupId: number;
+  declare groupId: number;
 
   @BelongsTo(() => Group)
   group: Group;

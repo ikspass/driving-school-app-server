@@ -19,16 +19,16 @@ export class TestEvent extends Model<TestEvent, TestEventCreationAttrs>{
 
   @ApiProperty({example: '2025-05-01', description: 'Дата'})
   @Column({type: DataType.STRING, allowNull: false})
-  date: string;
+  declare date: string;
 
   @ApiProperty({example: '18:00:00', description: 'Время'})
   @Column({type: DataType.STRING, allowNull: false, unique: true})
-  time: string;
+  declare time: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор группы'})
   @ForeignKey(() => Group)
   @Column({type: DataType.INTEGER, allowNull: false})
-  groupId: number;
+  declare groupId: number;
 
   @BelongsTo(() => Group)
   group: Group;
@@ -36,7 +36,7 @@ export class TestEvent extends Model<TestEvent, TestEventCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор зачёта'})
   @ForeignKey(() => Test)
   @Column({type: DataType.INTEGER, allowNull: false})
-  testId: number;
+  declare testId: number;
 
   @BelongsTo(() => Test)
   test: Test;

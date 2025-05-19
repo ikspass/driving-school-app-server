@@ -18,7 +18,7 @@ export class InstructorCategory extends Model<InstructorCategory, InstructorCate
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
   @ForeignKey(() => Instructor)
   @Column({type: DataType.INTEGER})
-  instructorId: number;
+  declare instructorId: number;
 
   @BelongsTo(() => Instructor)
   instructor: Instructor;
@@ -26,7 +26,7 @@ export class InstructorCategory extends Model<InstructorCategory, InstructorCate
   @ApiProperty({example: '2', description: 'Идентификатор категории'})
   @ForeignKey(() => Category)
   @Column({type: DataType.INTEGER})
-  categoryId: number;
+  declare categoryId: number;
 
   @BelongsTo(() => Category)
   category: Category;

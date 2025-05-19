@@ -19,24 +19,24 @@ export class Transport extends Model<Transport, TransportCreationAttrs>{
 
   @ApiProperty({example: 'Volkswagen Polo', description: 'Название'})
   @Column({type: DataType.STRING, allowNull: false})
-  name: string;
+  declare name: string;
 
   @ApiProperty({example: '8682 AX-3', description: 'Регистраиционный номер'})
   @Column({type: DataType.STRING, allowNull: false, unique: true})
-  sign: string;
+  declare sign: string;
 
   @ApiProperty({example: 'Белый', description: 'Цвет транспортного средства'})
   @Column({type: DataType.STRING, allowNull: false})
-  color: string;
+  declare color: string;
 
   @ApiProperty({example: 'В ремонте', description: 'Статус'})
   @Column({type: DataType.STRING, defaultValue: 'Активен', allowNull: false})
-  status: string;
+  declare status: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
   @ForeignKey(() => Instructor)
   @Column({type: DataType.INTEGER})
-  instructorId: number;
+  declare instructorId: number;
 
   @BelongsTo(() => Instructor)
   instructor: Instructor;
@@ -44,7 +44,7 @@ export class Transport extends Model<Transport, TransportCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
   @ForeignKey(() => Category)
   @Column({type: DataType.INTEGER})
-  categoryId: number;
+  declare categoryId: number;
 
   @BelongsTo(() => Category)
   category: Category;

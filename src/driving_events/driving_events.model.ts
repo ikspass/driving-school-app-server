@@ -22,16 +22,16 @@ export class DrivingEvent extends Model<DrivingEvent, DrivingEventCreationAttrs>
 
   @ApiProperty({example: '2025-05-01', description: 'Дата'})
   @Column({type: DataType.STRING, allowNull: false})
-  date: string;
+  declare date: string;
 
   @ApiProperty({example: '18:00:00', description: 'Время'})
   @Column({type: DataType.TIME, allowNull: false, unique: true})
-  time: string;
+  declare time: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
   @ForeignKey(() => Instructor)
   @Column({type: DataType.INTEGER, allowNull: false})
-  instructorId: number;
+  declare instructorId: number;
 
   @BelongsTo(() => Instructor)
   instructor: Instructor;
@@ -39,7 +39,7 @@ export class DrivingEvent extends Model<DrivingEvent, DrivingEventCreationAttrs>
   @ApiProperty({example: '1', description: 'Идентификатор курсанта'})
   @ForeignKey(() => Student)
   @Column({type: DataType.INTEGER, allowNull: false})
-  studentId: number;
+  declare studentId: number;
 
   @BelongsTo(() => Student, {as: 'drivingEventStudentInfo'})
   student: Student;
@@ -47,7 +47,7 @@ export class DrivingEvent extends Model<DrivingEvent, DrivingEventCreationAttrs>
   @ApiProperty({example: '1', description: 'Идентификатор транспорта'})
   @ForeignKey(() => Transport)
   @Column({type: DataType.INTEGER, allowNull: false})
-  transportId: number;
+  declare transportId: number;
 
   @BelongsTo(() => Transport)
   transport: Transport;
@@ -55,7 +55,7 @@ export class DrivingEvent extends Model<DrivingEvent, DrivingEventCreationAttrs>
   @ApiProperty({example: '1', description: 'Идентификатор локации'})
   @ForeignKey(() => DrivingPlace)
   @Column({type: DataType.INTEGER, allowNull: false})
-  placeId: number;
+  declare placeId: number;
   
   @BelongsTo(() => DrivingPlace)
   place: DrivingPlace;

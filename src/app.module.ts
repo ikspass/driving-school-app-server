@@ -52,6 +52,7 @@ import { TestResultsModule } from './test_results/test_results.module';
 import { StudentLecturesModule } from './student_lectures/student_lectures.module';
 import { StudentTestsModule } from './student_tests/student_tests.module';
 import { StudentTest } from './student_tests/student_tests.model';
+import { EventsCountModule } from './events_count/events_count.module';
 import pg from 'pg'
 
 @Module({
@@ -123,6 +124,7 @@ import pg from 'pg'
     TestResultsModule,
     StudentTestsModule,
     StudentLecturesModule,
+    EventsCountModule,
   ],
   controllers: [],
   providers: [],
