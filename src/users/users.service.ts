@@ -61,9 +61,9 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       where: {idNumber}, 
       include: [
-        {model: Student, include: [Group, Instructor]},
-        {model: Teacher, include: [Qual]},
-        {model: Instructor, include: []},
+        {model: Student, include: [{model: Group, include: [Category, ScheduleGroup]}, {model: Instructor, include: [{model: Transport, include: [Category]}]}]},
+        {model: Teacher, include: [{model: Group, include: [Category, ScheduleGroup]}, Qual]},
+        {model: Instructor, include: [{model: Transport, include: [Category]}]},
         {model: Role},
       ]
     });

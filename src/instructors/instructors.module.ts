@@ -15,6 +15,7 @@ import { Transport } from 'src/transports/transports.model';
   providers: [InstructorsService],
   imports: [
     SequelizeModule.forFeature([Instructor, Transport, Category, InstructorCategory, DrivingEvent, Student, User])
-  ]
+  ],
+  exports: [InstructorsService]
 })
 export class InstructorsModule {}

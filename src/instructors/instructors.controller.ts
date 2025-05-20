@@ -22,8 +22,8 @@ export class InstructorsController {
   @ApiOperation({summary: 'Изменить статус инструктора'})
   @ApiResponse({status: 200, type: Instructor})
   @Patch(':id/status')
-  updateStatus(@Param('id') id: number, @Body() dto: UpdateStatusDto) {
-    return this.instructorsService.updateInstructorStatus(id, dto);
+  updateStatus(@Param('id') id: number, @Body() status: string) {
+    return this.instructorsService.updateInstructorStatus(id, status);
   }
 
   // @Patch(':id')

@@ -16,6 +16,7 @@ import { User } from 'src/users/users.model';
   imports: [
     SequelizeModule.forFeature([Teacher, Qual, Group, LectureEvent, TeacherQuals, User]),
     QualsModule
-  ]
+  ],
+  exports: [TeachersService]
 })
 export class TeachersModule {}

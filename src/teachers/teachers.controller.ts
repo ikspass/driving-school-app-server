@@ -17,6 +17,11 @@ export class TeachersController {
     return this.teachersService.getAllTeachers();
   }
 
+  @Patch(':id/:status')
+  updateTeacherStatus(@Param('id') id: number, @Param('status') status: string){
+    return this.teachersService.updateTeacherStatus(id, status);
+  }
+
   @Delete(':id')  // Метод для удаления группы
   deleteTeacher(@Param('id') id: string) {
     return this.teachersService.deleteTeacher(id);

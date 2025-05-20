@@ -1,10 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
-import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Teacher } from './teachers.model';
 import { QualsService } from 'src/quals/quals.service';
-import { UpdateStatusDto } from './dto/update-status.dto';
 import { Qual } from 'src/quals/quals.model';
 
 @Injectable()
@@ -34,13 +32,13 @@ export class TeachersService {
     return teachers;
   }
 
-  async updateTeacherStatus(teacherId: number, dto: UpdateStatusDto){
-    const teacher = await this.teacherRepository.findByPk(teacherId);
+  async updateTeacherStatus(id: number, status: string){
+    const teacher = await this.teacherRepository.findByPk(id);
     if(!teacher){
       throw new HttpException('Преподаватель не найден', HttpStatus.NOT_FOUND)
     }
 
-    teacher.status = dto.status;
+    teacher.status = status;
     await teacher.save();
 
     return teacher;

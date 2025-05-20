@@ -46,13 +46,13 @@ export class StudentsService {
   //   return student;
   // }
 
-  async updateStudentStatus(studentId: number, dto: UpdateStatusDto){
+  async updateStudentStatus(studentId: number, status: string){
     const student = await this.studentRepository.findByPk(studentId);
     if(!student){
       throw new HttpException('Курсант не найден', HttpStatus.NOT_FOUND)
     }
 
-    student.status = dto.status;
+    student.status = status;
     await student.save();
 
     return student;

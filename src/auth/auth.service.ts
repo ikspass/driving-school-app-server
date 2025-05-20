@@ -4,13 +4,21 @@ import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs'
 import { User } from 'src/users/users.model';
+import { RolesService } from 'src/roles/roles.service';
+import { TeachersService } from 'src/teachers/teachers.service';
+import { StudentsService } from 'src/students/students.service';
+import { InstructorsService } from 'src/instructors/instructors.service';
 
 @Injectable()
 export class AuthService {
 
   constructor(
     private userService: UsersService, 
-    private jwtService: JwtService
+    private roleService: RolesService,
+    private jwtService: JwtService,
+    private teacherService: TeachersService,
+    private studentService: StudentsService,
+    private instructorService: InstructorsService
   ){}
 
   async adminLogin(body: {password: string}){
@@ -30,17 +38,44 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  async registration(dto: CreateUserDto & {password: string}){
+  async registration(dto: CreateUserDto & { password: string }) {
     const candidate = await this.userService.getUserByIdNumber(dto.idNumber);
-    if(candidate){
-      if(candidate.getDataValue('password') == null){
+    
+    if (candidate) {
+      if (candidate.getDataValue('password') === null) {
         const hashPassword = await bcrypt.hash(dto.password, 5);
         candidate.setDataValue('password', hashPassword);
+  
+        console.log('Candidate structure:', JSON.stringify(candidate, null, 2));
+  
+        if (candidate.student) {
+          await this.studentService.updateStudentStatus(candidate.student.id, 'Активен');
+        } else {
+          console.log('Student is undefined');
+        }
+  
+         // Check teacher
+        if (candidate.teacher) {
+          console.log('Updating teacher status:', candidate.teacher.id);
+          await this.teacherService.updateTeacherStatus(candidate.teacher.id, 'Активен');
+          console.log('Teacher status updated to Активен');
+        } else {
+          console.log('Teacher is undefined');
+        }
+  
+        if (candidate.instructor) {
+          await this.instructorService.updateInstructorStatus(candidate.instructor.id, 'Активен');
+        } else {
+          console.log('Instructor is undefined');
+        }
+  
         await candidate.save();
+  
         return this.generateToken(candidate);
       }
       throw new HttpException('Пользователь с таким идентификационным номером уже зарегистрирован', HttpStatus.BAD_REQUEST);
     }
+    
     throw new HttpException('Пользователя с таким идентификационным номером не существует', HttpStatus.BAD_REQUEST);
   }
 

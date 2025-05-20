@@ -6,6 +6,9 @@ import { UsersModule } from 'src/users/users.module';
 import { RolesModule } from 'src/roles/roles.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from 'src/users/users.model';
+import { InstructorsModule } from 'src/instructors/instructors.module';
+import { StudentsModule } from 'src/students/students.module';
+import { TeachersModule } from 'src/teachers/teachers.module';
 
 @Module({
   providers: [AuthService],
@@ -18,7 +21,10 @@ import { User } from 'src/users/users.model';
         expiresIn: '24h'
       }
     }),
-    SequelizeModule.forFeature([User])
+    SequelizeModule.forFeature([User]),
+    InstructorsModule,
+    StudentsModule,
+    TeachersModule
   ],
   exports: [
     AuthService, JwtModule

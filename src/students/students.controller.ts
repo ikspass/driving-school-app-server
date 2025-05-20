@@ -29,8 +29,8 @@ export class StudentsController {
   @ApiOperation({summary: 'Изменить статус курсанта'})
   @ApiResponse({status: 200, type: Student})
   @Patch(':id/status')
-  async updateStatus(@Param('id') id: number, @Body() dto: UpdateStatusDto) {
-    return this.studentsService.updateStudentStatus(id, dto);
+  async updateStatus(@Param('id') id: number, @Body() status: string) {
+    return this.studentsService.updateStudentStatus(id, status);
   }
 
   @Delete(':id')

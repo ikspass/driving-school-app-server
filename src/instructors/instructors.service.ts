@@ -34,13 +34,13 @@ export class InstructorsService {
     return instructors;
   }
 
-  async updateInstructorStatus(instructorId: number, dto: UpdateStatusDto){
+  async updateInstructorStatus(instructorId: number, status: string){
     const instructor = await this.instructorRepository.findByPk(instructorId);
     if(!instructor){
       throw new HttpException('Инструктор не найден', HttpStatus.NOT_FOUND)
     }
 
-    instructor.status = dto.status;
+    instructor.status = status;
     await instructor.save();
 
     return instructor;
