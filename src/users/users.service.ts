@@ -13,6 +13,9 @@ import { Qual } from 'src/quals/quals.model';
 import { Transport } from 'src/transports/transports.model';
 import { Category } from 'src/categories/categories.model';
 import { ScheduleGroup } from 'src/schedule_groups/schedule_groups.model';
+import { DrivingEvent } from 'src/driving_events/driving_events.model';
+import { LectureEvent } from 'src/lecture_events/lecture_events.model';
+import { TestEvent } from 'src/test_events/test_events.model';
 
 @Injectable()
 export class UsersService {
@@ -38,8 +41,8 @@ export class UsersService {
       order: [['id', 'ASC']],
       include: [
         {model: Student, include: [{model: Group, include: [Category, ScheduleGroup]}, {model: Instructor, include: [{model: Transport, include: [Category]}]}]},
-        {model: Teacher, include: [{model: Group, include: [Category, ScheduleGroup]}, Qual]},
-        {model: Instructor, include: [{model: Transport, include: [Category]}]},
+        {model: Teacher, include: [{model: Group, include: [Category, ScheduleGroup, {model: Student, include: [User]}]}, Qual]},
+        {model: Instructor, include: [{model: Transport, include: [Category]}, {model: Category}]},
         {model: Role},
       ]});
     return users;
@@ -48,10 +51,39 @@ export class UsersService {
   async getUserById(id: string){
     const user = await this.userRepository.findByPk(id, {
       include: [
-        {model: Student, include: [{model: Group, include: [Category, ScheduleGroup]}, {model: Instructor, include: [{model: Transport, include: [Category]}]}]},
-        {model: Teacher, include: [{model: Group, include: [Category, ScheduleGroup]}, Qual]},
-        {model: Instructor, include: [{model: Transport, include: [Category]}]},
-        {model: Role},
+        {
+          model: Student,
+          include: [
+            { model: Group, include: [{model: Category}, {model: ScheduleGroup}, {model: Teacher, include: [{model: User}]}, {model: Student, include: [User]}] },
+            { model: Instructor, include: [{ model: Transport, include: [Category] }, {model: User}] },
+            { model: DrivingEvent}
+          ]
+        },
+        {
+          model: Teacher,
+          include: [
+            { model: Group, include: [
+              {model: Category},
+              {model: ScheduleGroup},
+              {model: Student, include: [
+                User, {model: Instructor, include: [User, Transport]}, Group
+              ]},
+              {model: TestEvent},
+              {model: LectureEvent}
+
+            ]},
+            {model: Qual},
+            {model: LectureEvent},
+          ]
+        },
+        {
+          model: Instructor,
+          include: [
+            { model: Transport, include: [Category] },
+            { model: Category },
+        ]
+        },
+        { model: Role },
       ]
     });
     return user;
@@ -61,9 +93,9 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       where: {idNumber}, 
       include: [
-        {model: Student, include: [{model: Group, include: [Category, ScheduleGroup]}, {model: Instructor, include: [{model: Transport, include: [Category]}]}]},
-        {model: Teacher, include: [{model: Group, include: [Category, ScheduleGroup]}, Qual]},
-        {model: Instructor, include: [{model: Transport, include: [Category]}]},
+        {model: Student},
+        {model: Teacher},
+        {model: Instructor},
         {model: Role},
       ]
     });

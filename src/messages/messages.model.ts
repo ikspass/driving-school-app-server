@@ -1,8 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
-import { Chapter } from "src/chapters/chapters.model";
 import { Group } from "src/groups/groups.model";
-import { User } from "src/users/users.model";
 
 interface MessageCreateAttrs{
   date: Date
@@ -11,7 +9,7 @@ interface MessageCreateAttrs{
   groupId: number
 }
 
-@Table({tableName: 'messages', updatedAt: false})
+@Table({tableName: 'messages', updatedAt: false, createdAt: false})
 export class Message extends Model<Message, MessageCreateAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})

@@ -6,9 +6,10 @@ import { LectureEvent } from "src/lecture_events/lecture_events.model";
 interface StudentLectureCreationAttrs{
   studentId: number
   lectureId: number
+  attended: boolean
 }
 
-@Table({tableName: 'student_lectures', updatedAt: false})
+@Table({tableName: 'student_lectures', updatedAt: false, createdAt: false})
 export class StudentLecture extends Model<StudentLecture, StudentLectureCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})

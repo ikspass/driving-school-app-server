@@ -17,7 +17,7 @@ interface GroupCreationAttrs{
   scheduleGroupName: string 
 }
 
-@Table({tableName: 'groups', updatedAt: false})
+@Table({tableName: 'groups', updatedAt: false, createdAt: false})
 export class Group extends Model<Group, GroupCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
@@ -41,10 +41,6 @@ export class Group extends Model<Group, GroupCreationAttrs>{
   @Column({type: DataType.INTEGER, allowNull: false})
   declare teacherId: number;
 
-  @ApiProperty({example: '1', description: 'Количество студентов'})
-  @Column({type: DataType.INTEGER, allowNull: false, defaultValue: 0})
-  declare studentsCount: number;
-
   @BelongsTo(() => Teacher)
   teacher: Teacher;
 
@@ -65,11 +61,11 @@ export class Group extends Model<Group, GroupCreationAttrs>{
   students: Student[];
 
   @HasMany(() => TestEvent)
-  tests: TestEvent[];
+  testEvents: TestEvent[];
 
   @HasMany(() => Message)
   messages: Message;
 
   @HasMany(() => LectureEvent)
-  lectureLessons: LectureEvent[];
+  lectureEvents: LectureEvent[];
 }

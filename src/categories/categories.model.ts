@@ -34,7 +34,4 @@ export class Category extends Model<Category, CategoryCreationAttrs>{
 
   @HasMany(() => Student)
   students: Student[];
-
-  @HasMany(() => Test)
-  tests: Test[]
 }

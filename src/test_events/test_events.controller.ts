@@ -15,6 +15,21 @@ export class TestEventsController {
   findAll() {
     return this.testEventsService.getAllTestEvents();
   }
+  
+  @Get(':id')
+  getTestEventById(@Param('id') id: number) {
+    return this.testEventsService.getTestEventsById(id);
+  }
+
+  @Get('student/:id')
+  getTestEventsByStudent(@Param('id') id: number) {
+    return this.testEventsService.getTestEventsByStudent(id);
+  }
+
+  @Get('teacher/:id')
+  getTestEventsByTeacher(@Param('id') id: number) {
+    return this.testEventsService.getTestEventsByTeacher(id);
+  }
 
   @Delete(':id')
   delete(@Param('id') id: string) {

@@ -17,6 +17,21 @@ export class DrivingEventsController {
     return this.drivingEventsService.getAllDrivingEvents();
   }
 
+  @Get('student/:id')
+  getDrivingEventsByStudent(@Param('id') id: string) {
+    return this.drivingEventsService.getDrivingEventsByStudent(id);
+  }
+
+  @Get('instructor/:id')
+  getDrivingEventsByInstructor(@Param('id') id: string) {
+    return this.drivingEventsService.getDrivingEventsByInstructor(id);
+  }
+
+  @Get(':id')
+  getDrivingEventsById(@Param('id') id: number) {
+    return this.drivingEventsService.getDrivingEventById(id);
+  }
+
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.drivingEventsService.delete(id);

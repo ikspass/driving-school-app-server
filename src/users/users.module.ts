@@ -9,6 +9,7 @@ import { Instructor } from 'src/instructors/instructors.model';
 import { Student } from 'src/students/students.model';
 import { Teacher } from 'src/teachers/teachers.model';
 import { Role } from 'src/roles/roles.model';
+import { TestEvent } from 'src/test_events/test_events.model';
 
 @Module({
   controllers: [UsersController],
@@ -17,7 +18,7 @@ import { Role } from 'src/roles/roles.model';
   imports: [
     RolesModule,
     forwardRef(() => AuthModule),
-    SequelizeModule.forFeature([User, Instructor, Student, Teacher, Role])
+    SequelizeModule.forFeature([User, Instructor, Student, Teacher, Role, TestEvent])
   ],
 })
 export class UsersModule {}

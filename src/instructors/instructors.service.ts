@@ -5,6 +5,9 @@ import { UpdateStatusDto } from './dto/update-status.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Instructor } from './instructors.model';
 import { Category } from 'src/categories/categories.model';
+import { User } from 'src/users/users.model';
+import { Student } from 'src/students/students.model';
+import { Transport } from 'src/transports/transports.model';
 
 @Injectable()
 export class InstructorsService {
@@ -28,10 +31,29 @@ export class InstructorsService {
           through: {
             attributes: ['categoryId']
           }
-        }
+        },
+        {model: User},
+        {model: Student}
       ]
     });
     return instructors;
+  }
+
+  async getInstructorById(id: number){
+    const instructor = await this.instructorRepository.findByPk(id, {
+      include: [
+        {
+          model: Category,
+          through: {
+            attributes: ['categoryId']
+          }
+        },
+        {model: User},
+        {model: Student, include: [{model: User}]},
+        {model: Transport, include: [{model: Category}]}
+      ]
+    });
+    return instructor;
   }
 
   async updateInstructorStatus(instructorId: number, status: string){

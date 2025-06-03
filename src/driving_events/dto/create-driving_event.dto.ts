@@ -4,4 +4,5 @@ export class CreateDrivingEventDto {
   readonly instructorId: number
   readonly studentId: number
   readonly placeId: number
+  readonly transportId: number
 }

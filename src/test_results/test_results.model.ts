@@ -10,7 +10,7 @@ interface TestResultCreationAttrs{
   testEventId: number
 }
 
-@Table({tableName: 'test_results', updatedAt: false})
+@Table({tableName: 'test_results', updatedAt: false, createdAt: false})
 export class TestResult extends Model<TestResult, TestResultCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})

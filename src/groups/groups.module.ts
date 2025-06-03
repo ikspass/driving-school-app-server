@@ -17,9 +17,10 @@ import { User } from 'src/users/users.model';
   controllers: [GroupsController],
   providers: [GroupsService],
   imports: [
+    SequelizeModule.forFeature([Group, User, Category, LectureEvent, Student, Teacher, TestEvent, ScheduleGroup]),
     CategoriesModule,
     ScheduleGroupsModule,
-    SequelizeModule.forFeature([Group, User, Category, LectureEvent, Student, Teacher, TestEvent, ScheduleGroup])
-  ]
+  ],
+  exports: [GroupsService]
 })
 export class GroupsModule {}

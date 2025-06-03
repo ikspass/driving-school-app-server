@@ -4,6 +4,9 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Teacher } from './teachers.model';
 import { QualsService } from 'src/quals/quals.service';
 import { Qual } from 'src/quals/quals.model';
+import { Group } from 'src/groups/groups.model';
+import { Category } from 'src/categories/categories.model';
+import { User } from 'src/users/users.model';
 
 @Injectable()
 export class TeachersService {
@@ -28,9 +31,34 @@ export class TeachersService {
   async getAllTeachers() {
     const teachers = await this.teacherRepository.findAll({
       order: [['id', 'ASC']],
-      include:{all: true}});
+      include:[
+        {model: Group, include: [{model: Category}]},
+        {model: Qual},
+        {model: User}
+      ]
+    });
     return teachers;
   }
+
+  async getTeacherById(id: number) {
+    const teacher = await this.teacherRepository.findByPk(id, {
+      include:[
+        {model: Group, include: [{model: Category}]},
+        {model: Qual},
+        {model: User}
+      ]
+    });
+    return teacher;
+  }
+
+  // async getTeacherGroups(id: number){
+  //   const teacher = await this.teacherRepository.findByPk(id, {
+  //     include:[
+  //       {model: Group, include: [{model: Category}]},
+  //     ]
+  //   });
+  //   return teacher ? teacher.groups : {};
+  // }
 
   async updateTeacherStatus(id: number, status: string){
     const teacher = await this.teacherRepository.findByPk(id);

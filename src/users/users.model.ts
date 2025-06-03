@@ -16,7 +16,7 @@ interface UserCreationAttrs {
   img: string
 }
 
-@Table({tableName: 'users', updatedAt: false})
+@Table({tableName: 'users', updatedAt: false, createdAt: false})
 export class User extends Model<User, UserCreationAttrs>{
   
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})

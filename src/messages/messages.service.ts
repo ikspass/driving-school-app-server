@@ -18,6 +18,11 @@ export class MessagesService {
     return messages;
   }
 
+  async getMessagesByGroup(groupId: number) {
+    const messages = await this.messageRepository.findAll({where: {groupId}, include:{all: true}});
+    return messages;
+  }
+
   async delete(id: string) {
     return this.messageRepository.destroy({ where: { id } });
   }

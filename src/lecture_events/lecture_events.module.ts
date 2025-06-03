@@ -6,14 +6,15 @@ import { LectureEvent } from './lecture_events.model';
 import { Group } from 'src/groups/groups.model';
 import { Student } from 'src/students/students.model';
 import { Teacher } from 'src/teachers/teachers.model';
-import { Topic } from 'src/topics/topics.model';
 import { StudentLecture } from 'src/student_lectures/student_lectures.model';
+import { GroupsModule } from 'src/groups/groups.module';
 
 @Module({
   controllers: [LectureEventsController],
   providers: [LectureEventsService],
   imports: [
-    SequelizeModule.forFeature([LectureEvent, Group, Student, Teacher, Topic, StudentLecture])
+    SequelizeModule.forFeature([LectureEvent, Group, Student, Teacher, StudentLecture]),
+    GroupsModule,
   ]
 })
 export class LectureEventsModule {}

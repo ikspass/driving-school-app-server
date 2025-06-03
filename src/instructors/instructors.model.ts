@@ -12,7 +12,7 @@ interface InstructorCreateAttrs{
   dateOfEmployment: string
 }
 
-@Table({tableName: 'instructors', updatedAt: false})
+@Table({tableName: 'instructors', updatedAt: false, createdAt: false})
 export class Instructor extends Model<Instructor, InstructorCreateAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})

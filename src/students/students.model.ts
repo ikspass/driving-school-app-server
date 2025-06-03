@@ -15,7 +15,7 @@ interface StudentCreationAttrs {
   categoryValue: string
 }
 
-@Table({tableName: 'students', updatedAt: false})
+@Table({tableName: 'students', updatedAt: false, createdAt: false})
 export class Student extends Model<Student, StudentCreationAttrs>{
   
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
@@ -37,7 +37,7 @@ export class Student extends Model<Student, StudentCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
   @ForeignKey(() => Instructor)
   @Column({type: DataType.INTEGER})
-  declare instructorId: number;
+  declare instructorId: number | null;
 
   @BelongsTo(() => Instructor)
   instructor: Instructor;
@@ -45,7 +45,7 @@ export class Student extends Model<Student, StudentCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор группы'})
   @ForeignKey(() => Group)
   @Column({type: DataType.INTEGER})
-  declare groupId: number;
+  declare groupId: number | null;
 
   @BelongsTo(() => Group)
   group: Group;

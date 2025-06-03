@@ -55,9 +55,9 @@ export class UsersController {
 
   @ApiOperation({summary: 'Получить пользователя по idNumber'})
   @ApiResponse({status: 200, type: User})
-  @Get()
-  getByIdNumber(@Body() idNumber: string) {
-    return this.userService.getUserByIdNumber(idNumber);
+  @Get('/idNumber')
+  getByIdNumber(@Body() body: {idNumber: string}) {
+    return this.userService.getUserByIdNumber(body.idNumber);
   }
 
   @Delete(':id')

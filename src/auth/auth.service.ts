@@ -43,39 +43,41 @@ export class AuthService {
     
     if (candidate) {
       if (candidate.getDataValue('password') === null) {
-        const hashPassword = await bcrypt.hash(dto.password, 5);
-        candidate.setDataValue('password', hashPassword);
-  
-        console.log('Candidate structure:', JSON.stringify(candidate, null, 2));
-  
-        if (candidate.student) {
-          await this.studentService.updateStudentStatus(candidate.student.id, 'Активен');
-        } else {
-          console.log('Student is undefined');
+        if(dto.password.length >= 8 && dto.password.length <= 20){
+          const hashPassword = await bcrypt.hash(dto.password, 5);
+          candidate.setDataValue('password', hashPassword);
+      
+          if (candidate.student) {
+            await this.studentService.updateStudentStatus(candidate.student.id, 'Активен');
+          } else {
+            console.log('Student is undefined');
+          }
+    
+           // Check teacher
+          if (candidate.teacher) {
+            console.log('Updating teacher status:', candidate.teacher.id);
+            await this.teacherService.updateTeacherStatus(candidate.teacher.id, 'Активен');
+            console.log('Teacher status updated to Активен');
+          } else {
+            console.log('Teacher is undefined');
+          }
+    
+          if (candidate.instructor) {
+            await this.instructorService.updateInstructorStatus(candidate.instructor.id, 'Активен');
+          } else {
+            console.log('Instructor is undefined');
+          }
+    
+          await candidate.save();
+    
+          return this.generateToken(candidate);
+
         }
-  
-         // Check teacher
-        if (candidate.teacher) {
-          console.log('Updating teacher status:', candidate.teacher.id);
-          await this.teacherService.updateTeacherStatus(candidate.teacher.id, 'Активен');
-          console.log('Teacher status updated to Активен');
-        } else {
-          console.log('Teacher is undefined');
-        }
-  
-        if (candidate.instructor) {
-          await this.instructorService.updateInstructorStatus(candidate.instructor.id, 'Активен');
-        } else {
-          console.log('Instructor is undefined');
-        }
-  
-        await candidate.save();
-  
-        return this.generateToken(candidate);
+        
+        throw new HttpException('Пароль должен содержать от 8 до 20 символов', HttpStatus.BAD_REQUEST);
       }
       throw new HttpException('Пользователь с таким идентификационным номером уже зарегистрирован', HttpStatus.BAD_REQUEST);
     }
-    
     throw new HttpException('Пользователя с таким идентификационным номером не существует', HttpStatus.BAD_REQUEST);
   }
 
@@ -88,7 +90,7 @@ export class AuthService {
 
   private async validateUser(dto: CreateUserDto & {password: string}){
     const user = await this.userService.getUserByIdNumber(dto.idNumber);
-    if(user){
+    if(user && user.dataValues.password){
       const passwordEquals = await bcrypt.compare(dto.password, user.dataValues.password);
       
       if(passwordEquals){

@@ -26,14 +26,14 @@ export class InstructorsController {
     return this.instructorsService.updateInstructorStatus(id, status);
   }
 
+  @Get(':id')
+  getInstructorById(@Param('id') id: number){
+    return this.instructorsService.getInstructorById(id)
+  }
+
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateInstructorDto: UpdateInstructorDto) {
   //   return this.instructorsService.update(+id, updateInstructorDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.instructorsService.remove(+id);
   // }
   
   @Delete(':id')

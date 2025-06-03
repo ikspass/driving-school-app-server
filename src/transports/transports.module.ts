@@ -14,6 +14,7 @@ import { CategoriesModule } from 'src/categories/categories.module';
     SequelizeModule.forFeature([Transport, Instructor]),
     InstructorsModule,
     CategoriesModule
-  ]
+  ],
+  exports: [TransportsService]
 })
 export class TransportsModule {}

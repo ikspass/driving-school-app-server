@@ -3,7 +3,6 @@ import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, HasOne
 import { Group } from "src/groups/groups.model";
 import { Student } from "src/students/students.model";
 import { Teacher } from "src/teachers/teachers.model";
-import { Topic } from "src/topics/topics.model";
 import { StudentLecture } from "src/student_lectures/student_lectures.model";
 
 interface LectureEventCreationAttrs{
@@ -11,10 +10,9 @@ interface LectureEventCreationAttrs{
   time: string
   teacherId: number
   groupId: number
-  topicId: number
 }
 
-@Table({tableName: 'lecture_events', updatedAt: false})
+@Table({tableName: 'lecture_events', updatedAt: false, createdAt: false})
 export class LectureEvent extends Model<LectureEvent, LectureEventCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
@@ -26,7 +24,7 @@ export class LectureEvent extends Model<LectureEvent, LectureEventCreationAttrs>
   declare date: string;
 
   @ApiProperty({example: '18:00:00', description: 'Время'})
-  @Column({type: DataType.TIME, allowNull: false, unique: true})
+  @Column({type: DataType.STRING, allowNull: false})
   declare time: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор преподавателя'})
@@ -45,13 +43,9 @@ export class LectureEvent extends Model<LectureEvent, LectureEventCreationAttrs>
   @BelongsTo(() => Group)
   group: Group;
 
-  @ApiProperty({example: '1', description: 'Идентификатор темы'})
-  @ForeignKey(() => Topic)
-  @Column({type: DataType.INTEGER, allowNull: false})
-  declare topicId: number;
-  
-  @BelongsTo(() => Topic)
-  topic: Topic;
+  @ApiProperty({example: 'В будущем', description: 'Статус темы'})
+  @Column({type: DataType.STRING, defaultValue: 'В будущем'})
+  declare status: string;
 
   @BelongsToMany(() => Student, () => StudentLecture)
   students: Student[];

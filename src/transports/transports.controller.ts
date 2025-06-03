@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { TransportsService } from './transports.service';
 import { CreateTransportDto } from './dto/create-transport.dto';
 
@@ -14,6 +14,16 @@ export class TransportsController {
   @Get()
   getAll() {
     return this.transportService.getAllTransports();
+  }
+
+  @Get(':id')
+  getTransportById(@Param('id') id: number) {
+    return this.transportService.getTransportById(id);
+  }
+
+  @Patch(':id/instructor/:instructorId')
+  updateTransportInstructor(@Param('id') id: number, @Param('instructorId') instructorId: number) {
+    return this.transportService.updateTransportInstructor(id, instructorId);
   }
 
   @Delete(':id')

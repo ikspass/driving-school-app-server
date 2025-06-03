@@ -9,17 +9,10 @@ import { CategoriesService } from 'src/categories/categories.service';
 export class TestsService {
   constructor(@InjectModel(Test) 
   private testRepository: typeof Test,
-  private categoryService: CategoriesService
 ) {}
 
   async createTest(dto: CreateTestDto) {
     const test = await this.testRepository.create(dto);
-    const category = await this.categoryService.getCategoryByValue(dto.categoryValue);
-    if(category){
-      await test.$set('category', category.id)
-      test.category = category;
-      await test.save();
-    }
     return test;
   }
 

@@ -1,6 +1,6 @@
 export class CreateTestEventDto {
   readonly date: string
   readonly time: string
-  readonly groupName: string
-  readonly testId: number
+  readonly groupId: number
+  // readonly testId: number
 }

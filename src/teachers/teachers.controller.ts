@@ -17,6 +17,16 @@ export class TeachersController {
     return this.teachersService.getAllTeachers();
   }
 
+  @Get(':id')
+  getTeacherById(@Param('id') id: number) {
+    return this.teachersService.getTeacherById(id);
+  }
+
+  // @Get(':id/groups')
+  // getTeacherGroups(@Param('id') id: number) {
+  //   return this.teachersService.getTeacherGroups(id);
+  // }
+
   @Patch(':id/:status')
   updateTeacherStatus(@Param('id') id: number, @Param('status') status: string){
     return this.teachersService.updateTeacherStatus(id, status);

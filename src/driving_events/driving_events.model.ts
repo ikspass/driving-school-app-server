@@ -13,7 +13,7 @@ interface DrivingEventCreationAttrs{
   placeId: number
 }
 
-@Table({tableName: 'driving_events', updatedAt: false})
+@Table({tableName: 'driving_events', updatedAt: false, createdAt: false})
 export class DrivingEvent extends Model<DrivingEvent, DrivingEventCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
@@ -25,7 +25,7 @@ export class DrivingEvent extends Model<DrivingEvent, DrivingEventCreationAttrs>
   declare date: string;
 
   @ApiProperty({example: '18:00:00', description: 'Время'})
-  @Column({type: DataType.TIME, allowNull: false, unique: true})
+  @Column({type: DataType.STRING, allowNull: false})
   declare time: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
@@ -41,12 +41,16 @@ export class DrivingEvent extends Model<DrivingEvent, DrivingEventCreationAttrs>
   @Column({type: DataType.INTEGER, allowNull: false})
   declare studentId: number;
 
-  @BelongsTo(() => Student, {as: 'drivingEventStudentInfo'})
+  @BelongsTo(() => Student)
   student: Student;
+
+  @ApiProperty({example: 'В будущем', description: 'Статус вождения'})
+  @Column({type: DataType.STRING, defaultValue: 'В будущем'})
+  declare status: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор транспорта'})
   @ForeignKey(() => Transport)
-  @Column({type: DataType.INTEGER, allowNull: false})
+  @Column({type: DataType.INTEGER})
   declare transportId: number;
 
   @BelongsTo(() => Transport)

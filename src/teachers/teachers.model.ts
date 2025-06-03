@@ -11,7 +11,7 @@ interface TeacherCreateAttrs{
   dateOfEmployment: string
 }
 
-@Table({tableName: 'teachers', updatedAt: false})
+@Table({tableName: 'teachers', updatedAt: false, createdAt: false})
 export class Teacher extends Model<Teacher, TeacherCreateAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
@@ -41,5 +41,5 @@ export class Teacher extends Model<Teacher, TeacherCreateAttrs>{
   groups: Group[];
 
   @HasMany(() => LectureEvent)
-  lectureLessons: LectureEvent[];
+  lectureEvents: LectureEvent[];
 }

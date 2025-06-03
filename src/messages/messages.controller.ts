@@ -13,8 +13,13 @@ export class MessagesController {
   }
 
   @Get()
-  findAll() {
+  getAllMessages() {
     return this.messagesService.getAllMessages();
+  }
+
+  @Get('group/:groupId')
+  getMessagesByGroup(@Param('groupId') groupId: number) {
+    return this.messagesService.getMessagesByGroup(groupId);
   }
 
   @Delete(':id')

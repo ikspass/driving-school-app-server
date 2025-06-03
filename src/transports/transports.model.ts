@@ -10,7 +10,7 @@ interface TransportCreationAttrs{
   categoryValue: string
 }
 
-@Table({tableName: 'transports', updatedAt: false})
+@Table({tableName: 'transports', updatedAt: false, createdAt: false})
 export class Transport extends Model<Transport, TransportCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
@@ -36,10 +36,10 @@ export class Transport extends Model<Transport, TransportCreationAttrs>{
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
   @ForeignKey(() => Instructor)
   @Column({type: DataType.INTEGER})
-  declare instructorId: number;
+  declare instructorId: number | null;
 
   @BelongsTo(() => Instructor)
-  instructor: Instructor;
+  instructor: Instructor | null;
 
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
   @ForeignKey(() => Category)

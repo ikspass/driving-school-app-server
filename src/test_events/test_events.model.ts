@@ -6,11 +6,11 @@ import { Test } from "src/tests/tests.model";
 interface TestEventCreationAttrs{
   date: string
   time: string
-  groupName: string
-  testId: number
+  groupId: number
+  // testId: number
 }
 
-@Table({tableName: 'test_events', updatedAt: false})
+@Table({tableName: 'test_events', updatedAt: false, createdAt: false})
 export class TestEvent extends Model<TestEvent, TestEventCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})
@@ -22,7 +22,7 @@ export class TestEvent extends Model<TestEvent, TestEventCreationAttrs>{
   declare date: string;
 
   @ApiProperty({example: '18:00:00', description: 'Время'})
-  @Column({type: DataType.STRING, allowNull: false, unique: true})
+  @Column({type: DataType.STRING, allowNull: false})
   declare time: string;
 
   @ApiProperty({example: '1', description: 'Идентификатор группы'})
@@ -30,14 +30,21 @@ export class TestEvent extends Model<TestEvent, TestEventCreationAttrs>{
   @Column({type: DataType.INTEGER, allowNull: false})
   declare groupId: number;
 
+  @Column({type: DataType.INTEGER, allowNull: false})
+  declare description: number;
+
   @BelongsTo(() => Group)
   group: Group;
 
-  @ApiProperty({example: '1', description: 'Идентификатор зачёта'})
-  @ForeignKey(() => Test)
-  @Column({type: DataType.INTEGER, allowNull: false})
-  declare testId: number;
+  // @ApiProperty({example: '1', description: 'Идентификатор зачёта'})
+  // @ForeignKey(() => Test)
+  // @Column({type: DataType.INTEGER, allowNull: false})
+  // declare testId: number;
 
-  @BelongsTo(() => Test)
-  test: Test;
+  @ApiProperty({example: 'В будущем', description: 'Статус зачёта'})
+  @Column({type: DataType.STRING, defaultValue: 'В будущем'})
+  declare status: string;
+
+  // @BelongsTo(() => Test)
+  // test: Test;
 }

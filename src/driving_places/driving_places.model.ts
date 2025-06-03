@@ -7,7 +7,7 @@ interface DrivingPlaceCreationAttrs{
   description: string
 }
 
-@Table({tableName: 'driving_places', updatedAt: false})
+@Table({tableName: 'driving_places', updatedAt: false, createdAt: false})
 export class DrivingPlace extends Model<DrivingPlace, DrivingPlaceCreationAttrs>{
 
   @ApiProperty({example: '1', description: 'Уникальный идентификатор'})

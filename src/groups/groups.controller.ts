@@ -22,6 +22,11 @@ export class GroupsController {
     return this.groupsService.getGroupById(id);
   } 
 
+  @Patch(':groupId/teacher/:teacherId')
+  updateGroupTeacher(@Param('groupId') groupId: number, @Param('teacherId') teacherId: number) {
+    return this.groupsService.updateGroupTeacher(groupId, teacherId);
+  } 
+
   @Delete(':id')
   deleteGroup(@Param('id') id: string) {
     return this.groupsService.deleteGroup(id);

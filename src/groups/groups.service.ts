@@ -13,61 +13,100 @@ import { Student } from 'src/students/students.model';
 import { TestEvent } from 'src/test_events/test_events.model';
 import { LectureEvent } from 'src/lecture_events/lecture_events.model';
 import { Message } from 'src/messages/messages.model';
+import { Instructor } from 'src/instructors/instructors.model';
 
 @Injectable()
 export class GroupsService {
-  constructor(@InjectModel(Group) 
-  private groupRepository: typeof Group,
-  private categoryService: CategoriesService,
-  private scheduleService: ScheduleGroupsService
-) {}
+  constructor(
+    @InjectModel(Group)
+    private groupRepository: typeof Group,
+    @InjectModel(Student)
+    private studentRepository: typeof Student,
+    @InjectModel(Teacher)
+    private teacherRepository: typeof Teacher,
+    private categoryService: CategoriesService,
+    private scheduleService: ScheduleGroupsService
+  ) {}
 
   async createGroup(dto: CreateGroupDto) {
-    const group = await this.groupRepository.create(dto)
-    const category = await this.categoryService.getCategoryByValue(dto.categoryValue);
-    if(category){
-      await group.$set('category', category.id)
+    const group = await this.groupRepository.create(dto);
+    
+    const [category, schedule] = await Promise.all([
+      this.categoryService.getCategoryByValue(dto.categoryValue),
+      this.scheduleService.getScheduleGroupByName(dto.scheduleGroupName),
+    ]);
+
+    if (category) {
+      await group.$set('category', category.id);
       group.category = category;
-      await group.save();
     }
-    const schedule = await this.scheduleService.getScheduleGroupByName(dto.scheduleGroupName);
-    if(schedule){
-      await group.$set('scheduleGroup', schedule.id)
+    
+    if (schedule) {
+      await group.$set('scheduleGroup', schedule.id);
       group.scheduleGroup = schedule;
-      await group.save();
     }
+
+    await group.save();
     return group;
   }
 
   async getAllGroups() {
-    const groups = await this.groupRepository.findAll({
+    return this.groupRepository.findAll({
       order: [['id', 'ASC']],
-      include:[
-        {model: Category},
-        {model: ScheduleGroup},
-        {model: Teacher, include: [User]},
-        {model: Student},
-        {model: TestEvent},
-        {model: LectureEvent},
-        {model: Message},
-      ]
+      include: [
+        { model: Category },
+        { model: ScheduleGroup },
+        { model: Teacher, include: [User] },
+        { model: Student },
+        { model: TestEvent },
+        { model: LectureEvent },
+        { model: Message },
+      ],
     });
-    return groups;
   }
 
-  async getGroupById(id: number){
-    const group = await this.groupRepository.findByPk(id, {
+  async getGroupById(id: number) {
+    return this.groupRepository.findByPk(id, {
       include: [
-        {model: Category},
-        {model: ScheduleGroup},
-        {model: Teacher, include: [User]},
-        {model: Student},
-        {model: TestEvent},
-        {model: LectureEvent},
-        {model: Message},
-      ]
+        { model: Category },
+        { model: ScheduleGroup },
+        { model: Teacher, include: [User] },
+        { model: Student, include: [
+          {model: User},
+          {model: Instructor, include: [User]}
+        ]},
+        { model: TestEvent },
+        { model: LectureEvent },
+        { model: Message },
+      ],
+    });
+  }
+
+  async getGroupByStudent(studentId: number) {
+    const student = await this.studentRepository.findByPk(studentId, {
+      include: [{ model: Group }],
+    });
+    return student ? student.group : null;
+  }
+
+  async getGroupsByTeacher(teacherId: number) {
+    const groups = await this.groupRepository.findAll({
+      where: {teacherId},
+    });
+    return groups
+  }
+
+  async updateGroupTeacher(groupId: number, teacherId: number) {
+    const group = await this.groupRepository.findByPk(groupId, {
+      include: [{ model: Teacher }],
     })
-    return group;
+    const teacher = await this.teacherRepository.findByPk(teacherId)
+    if(group && teacher){
+      await group.$set('teacher', teacher.id);
+      group.teacherId = teacher.id;
+      await group.save();
+    }
+    return group ? group : {};
   }
 
   async deleteGroup(id: string) {

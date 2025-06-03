@@ -18,22 +18,16 @@ import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { User } from './users/users.model';
 import { Role } from './roles/roles.model';
-import { LectureEventsService } from './lecture_events/lecture_events.service';
-import { LectureEventsController } from './lecture_events/lecture_events.controller';
 import { LectureEventsModule } from './lecture_events/lecture_events.module';
 import { DrivingPlacesModule } from './driving_places/driving_places.module';
 import { DrivingEventsModule } from './driving_events/driving_events.module';
 import { TestLessonsModule } from './test_events/test_events.module';
 import { TestsModule } from './tests/tests.module';
-import { ChaptersModule } from './chapters/chapters.module';
-import { TopicsModule } from './topics/topics.module';
-import { Chapter } from './chapters/chapters.model';
 import { DrivingEvent } from './driving_events/driving_events.model';
 import { DrivingPlace } from './driving_places/driving_places.model';
 import { LectureEvent } from './lecture_events/lecture_events.model';
 import { TestEvent } from './test_events/test_events.model';
 import { Test } from './tests/tests.model';
-import { Topic } from './topics/topics.model';
 import { TeacherQuals } from './teacher_quals/teacher_quals.model';
 import { StudentLecture } from './student_lectures/student_lectures.model';
 import { TestResult } from './test_results/test_results.model';
@@ -42,8 +36,6 @@ import { MessagesModule } from './messages/messages.module';
 import { Message } from './messages/messages.model';
 import { TransportsModule } from './transports/transports.module';
 import { Transport } from './transports/transports.model';
-import { ScheduleGroupsController } from './schedule_groups/schedule_groups.controller';
-import { ScheduleGroupsService } from './schedule_groups/schedule_groups.service';
 import { ScheduleGroupsModule } from './schedule_groups/schedule_groups.module';
 import { ScheduleGroup } from './schedule_groups/schedule_groups.model';
 import { InstructorCategoriesModule } from './instructor_categories/instructor_categories.module';
@@ -52,7 +44,6 @@ import { TestResultsModule } from './test_results/test_results.module';
 import { StudentLecturesModule } from './student_lectures/student_lectures.module';
 import { StudentTestsModule } from './student_tests/student_tests.module';
 import { StudentTest } from './student_tests/student_tests.model';
-import { EventsCountModule } from './events_count/events_count.module';
 import pg from 'pg'
 
 @Module({
@@ -69,7 +60,6 @@ import pg from 'pg'
       models: [
         Transport,
         Category,
-        Chapter,
         DrivingEvent,
         DrivingPlace,
         Group,
@@ -85,7 +75,6 @@ import pg from 'pg'
         TestEvent,
         TestResult,
         Test,
-        Topic,
         User,
         Message,
         ScheduleGroup,
@@ -111,8 +100,6 @@ import pg from 'pg'
     UsersModule,
     RolesModule,
     LectureEventsModule,
-    TopicsModule,
-    ChaptersModule,
     TestsModule,
     TestLessonsModule,
     DrivingEventsModule,
@@ -124,7 +111,6 @@ import pg from 'pg'
     TestResultsModule,
     StudentTestsModule,
     StudentLecturesModule,
-    EventsCountModule,
   ],
   controllers: [],
   providers: [],
