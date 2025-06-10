@@ -6,8 +6,8 @@ import { Group } from "src/groups/groups.model";
 import { Instructor } from "src/instructors/instructors.model";
 import { LectureEvent } from "src/lecture_events/lecture_events.model";
 import { StudentLecture } from "src/student_lectures/student_lectures.model";
+import { StudentTest } from "src/student_tests/student_tests.model";
 import { TestEvent } from "src/test_events/test_events.model";
-import { TestResult } from "src/test_results/test_results.model";
 import { User } from "src/users/users.model";
 
 interface StudentCreationAttrs {
@@ -58,14 +58,14 @@ export class Student extends Model<Student, StudentCreationAttrs>{
   @BelongsTo(() => Category)
   category: Category;
 
-  @BelongsToMany(() => TestEvent, () => TestResult)
-  tests: TestEvent[];
-
   @BelongsToMany(() => LectureEvent, () => StudentLecture)
-  lectures: LectureEvent[];
+  lectures: StudentLecture[];
 
-  @HasMany(() => TestResult)
-  testResults: TestResult[];
+  @HasMany(() => StudentTest)
+  studentTests: StudentTest[];
+
+  @HasMany(() => StudentLecture)
+  studentLectures: StudentLecture[];
 
   @HasMany(() => DrivingEvent)
   drivings: DrivingEvent;

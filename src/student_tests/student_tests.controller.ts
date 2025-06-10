@@ -16,6 +16,26 @@ export class StudentTestsController {
     return this.studentTestsService.findAll()
   }
 
+  @Get('student/:id')
+  findAllByStudentId(@Param('id') studentId: number) {
+    return this.studentTestsService.findAllByStudentId(studentId)
+  }
+
+  @Get('test-event/:id')
+  findAllByTestEventId(@Param('id') testEventId: number) {
+    return this.studentTestsService.findAllByTestId(testEventId)
+  }
+
+  @Patch('attended/student/:studentId/test/:testId')
+  updateStudentTestAbsent(@Param('studentId') studentId: number, @Param('testId') testId: number) {
+    return this.studentTestsService.updateStudentTestAttended(testId, studentId);
+  }
+
+  @Patch('passed/student/:studentId/test/:testId')
+  updateStudentTestPassed(@Param('studentId') studentId: number, @Param('testId') testId: number) {
+    return this.studentTestsService.updateStudentTestPassed(testId, studentId);
+  }
+
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.studentTestsService.delete(id);

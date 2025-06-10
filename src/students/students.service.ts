@@ -3,14 +3,19 @@ import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { Student } from './students.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { UpdateStatusDto } from './dto/update-status.dto';
-import { RolesService } from 'src/roles/roles.service';
 import { Instructor } from 'src/instructors/instructors.model';
 import { User } from 'src/users/users.model';
 import { Group } from 'src/groups/groups.model';
 import { CategoriesService } from 'src/categories/categories.service';
 import { InstructorsService } from 'src/instructors/instructors.service';
 import { GroupsService } from 'src/groups/groups.service';
+import { Category } from 'src/categories/categories.model';
+import { LectureEvent } from 'src/lecture_events/lecture_events.model';
+import { StudentLecture } from 'src/student_lectures/student_lectures.model';
+import { StudentTest } from 'src/student_tests/student_tests.model';
+import { TestEvent } from 'src/test_events/test_events.model';
+import { DrivingEvent } from 'src/driving_events/driving_events.model';
+import { Test } from 'src/tests/tests.model';
 
 @Injectable()
 export class StudentsService {
@@ -42,7 +47,8 @@ export class StudentsService {
       include:[
         {model: Instructor, include: [User]},
         {model: User},
-        {model: Group}
+        {model: Group},
+        {model: Category}
       ]
     });
     return students;
@@ -53,33 +59,13 @@ export class StudentsService {
       include:[
         {model: Instructor, include: [User]},
         {model: User},
-        {model: Group}
+        {model: Group},
+        {model: StudentTest, include: [{model: TestEvent, include: [Test]}]},
+        {model: StudentLecture, include: [LectureEvent]},
+        {model: DrivingEvent}
       ]
     });
     return student;
-  }
-
-  // async getStudentGroup(id: number){
-  //   const student = await this.studentRepository.findByPk(id, {
-  //     include:[
-  //       {model: Group}
-  //     ]
-  //   });
-  //   return student ? student.group : {};
-  // }
-
-  async getStudentsWithoutGroup(){
-    const groupId = null;
-    const students = await this.studentRepository.findAll({
-      where: {groupId},
-      order: [['id', 'ASC']],
-      include:[
-        {model: Instructor, include: [User]},
-        {model: User},
-        {model: Group}
-      ]
-    });
-    return students;
   }
 
   async setStudentGroup(studentId: number, groupId: number){
@@ -110,15 +96,10 @@ export class StudentsService {
     return students;
   }
 
-  // async getStudentByIdNumber(idNumber: string){
-  //   const student = await this.studentRepository.findOne({where: {idNumber}, include: {all: true}})
-  //   return student;
-  // }
-
   async getStudentsByTeacher(teacherId: number) {
     const groups = await this.groupModel.findAll({
       where: { teacherId },
-      include: [{ model: Student, include: [{model: User}] }], // Включаем студентов
+      include: [{ model: Student, include: [{model: User}] }],
     });
     console.log('groups: ', groups)
     
@@ -141,14 +122,11 @@ export class StudentsService {
   }
 
   async updateStudentInstructor(id: string, instructorId: number){
-    console.log('studentId: ', id)
 
     const student = await this.studentRepository.findByPk(id);
     if(!student){
       throw new HttpException('Курсант не найден', HttpStatus.NOT_FOUND)
     }
-    
-    console.log('instructorId: ', instructorId)
 
     const instructor = await this.instructorService.getInstructorById(instructorId);
     if(instructor){

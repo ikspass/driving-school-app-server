@@ -10,7 +10,6 @@ interface UserCreationAttrs {
   passportNumber: string;
   phoneNumber: string;
   roleValue: string;
-  adress:  string;
   fullName: string;
   dateOfBirth: string;
   img: string
@@ -38,10 +37,6 @@ export class User extends Model<User, UserCreationAttrs>{
   @ApiProperty({example: '123457890', description: 'Пароль'})
   @Column({type: DataType.STRING})
   declare password: string;
-  
-  @ApiProperty({example: 'г. Минск, ул. Савицкого, 30-105', description: 'Прописка'})
-  @Column({type: DataType.STRING, allowNull: false})
-  declare adress: string;
   
   @ApiProperty({example: 'Иванов Иван Иванович', description: 'ФИО'})
   @Column({type: DataType.STRING, allowNull: false})

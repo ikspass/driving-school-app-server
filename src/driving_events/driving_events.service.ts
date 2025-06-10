@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateDrivingEventDto } from './dto/create-driving_event.dto';
 import { UpdateDrivingEventDto } from './dto/update-driving_event.dto';
 import { InjectModel } from '@nestjs/sequelize';
@@ -90,6 +90,18 @@ export class DrivingEventsService {
       ]
     });
     return drivingEvents;
+  }
+
+  async updateDrivingEventStatus(eventId: number, status: string){
+    const event = await this.drivingEventRepository.findByPk(eventId);
+    if(!event){
+      throw new HttpException('Событие не найдено', HttpStatus.NOT_FOUND)
+    }
+
+    event.status = status;
+    await event.save();
+
+    return event;
   }
 
   async delete(id: string) {

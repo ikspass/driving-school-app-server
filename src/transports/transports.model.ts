@@ -29,10 +29,6 @@ export class Transport extends Model<Transport, TransportCreationAttrs>{
   @Column({type: DataType.STRING, allowNull: false})
   declare color: string;
 
-  @ApiProperty({example: 'В ремонте', description: 'Статус'})
-  @Column({type: DataType.STRING, defaultValue: 'Активен', allowNull: false})
-  declare status: string;
-
   @ApiProperty({example: '1', description: 'Идентификатор инструктора'})
   @ForeignKey(() => Instructor)
   @Column({type: DataType.INTEGER})

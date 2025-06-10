@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './users.model';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -8,14 +8,16 @@ import { Group } from 'src/groups/groups.model';
 import { Instructor } from 'src/instructors/instructors.model';
 import { Teacher } from 'src/teachers/teachers.model';
 import { Role } from 'src/roles/roles.model';
-import { TeacherQuals } from 'src/teacher_quals/teacher_quals.model';
-import { Qual } from 'src/quals/quals.model';
 import { Transport } from 'src/transports/transports.model';
 import { Category } from 'src/categories/categories.model';
 import { ScheduleGroup } from 'src/schedule_groups/schedule_groups.model';
 import { DrivingEvent } from 'src/driving_events/driving_events.model';
 import { LectureEvent } from 'src/lecture_events/lecture_events.model';
 import { TestEvent } from 'src/test_events/test_events.model';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { StudentLecture } from 'src/student_lectures/student_lectures.model';
+import { StudentTest } from 'src/student_tests/student_tests.model';
+import { Test } from 'src/tests/tests.model';
 
 @Injectable()
 export class UsersService {
@@ -36,12 +38,35 @@ export class UsersService {
     return user;
   }
 
+  async updateUser(id: number, dto: UpdateUserDto) {
+    console.log('Received dto:', dto); // Логируем полученные данные
+  
+    const user = await this.userRepository.findByPk(id);
+    if (!user) {
+      throw new HttpException('Пользователь не найден', HttpStatus.NOT_FOUND);
+    }
+  
+    // Убедитесь, что dto не undefined
+    if (!dto) {
+      throw new HttpException('Данные для обновления не переданы', HttpStatus.BAD_REQUEST);
+    }
+  
+    user.idNumber = dto.idNumber;
+    user.passportNumber = dto.passportNumber;
+    user.fullName = dto.fullName;
+    user.dateOfBirth = dto.dateOfBirth;
+    user.phoneNumber = dto.phoneNumber;
+  
+    await user.save();
+    return user;
+  }
+
   async getAllUsers(){
     const users = await this.userRepository.findAll({
       order: [['id', 'ASC']],
       include: [
         {model: Student, include: [{model: Group, include: [Category, ScheduleGroup]}, {model: Instructor, include: [{model: Transport, include: [Category]}]}]},
-        {model: Teacher, include: [{model: Group, include: [Category, ScheduleGroup, {model: Student, include: [User]}]}, Qual]},
+        {model: Teacher, include: [{model: Group, include: [Category, ScheduleGroup, {model: Student, include: [User]}]}]},
         {model: Instructor, include: [{model: Transport, include: [Category]}, {model: Category}]},
         {model: Role},
       ]});
@@ -56,7 +81,11 @@ export class UsersService {
           include: [
             { model: Group, include: [{model: Category}, {model: ScheduleGroup}, {model: Teacher, include: [{model: User}]}, {model: Student, include: [User]}] },
             { model: Instructor, include: [{ model: Transport, include: [Category] }, {model: User}] },
-            { model: DrivingEvent}
+            { model: DrivingEvent },
+            { model: User },
+            { model: StudentLecture, include: [LectureEvent]},
+            { model: StudentTest,
+              include: [{model: TestEvent, include: [Test]}]}
           ]
         },
         {
@@ -72,7 +101,6 @@ export class UsersService {
               {model: LectureEvent}
 
             ]},
-            {model: Qual},
             {model: LectureEvent},
           ]
         },
@@ -81,6 +109,7 @@ export class UsersService {
           include: [
             { model: Transport, include: [Category] },
             { model: Category },
+            { model: Student, include: [User, Group, Category] }
         ]
         },
         { model: Role },

@@ -6,6 +6,8 @@ import { TestEvent } from "src/test_events/test_events.model";
 interface StudentTestCreatioAttrs{
   studentId: number
   testId: number
+  attended: boolean
+  passed: boolean
 }
 
 @Table({tableName: 'student_tests', createdAt: false, updatedAt: false})
@@ -20,16 +22,20 @@ export class StudentTest extends Model<StudentTest, StudentTestCreatioAttrs>{
   @Column({type: DataType.INTEGER, allowNull: false})
   declare studentId: number;
 
-  @BelongsTo(() => Student, { as: 'studentTest' }) // Уникальный псевдоним
+  @BelongsTo(() => Student)
   student: Student;
 
   @ApiProperty({example: '1', description: 'Идентификатор зачёта'})
   @ForeignKey(() => TestEvent)
   @Column({type: DataType.INTEGER, allowNull: false})
-  declare testId: number;
+  declare testEventId: number;
 
   @BelongsTo(() => TestEvent)
-  test: TestEvent;
+  testEvent: TestEvent;
+  
+  @ApiProperty({example: 'true', description: 'Зачёт сдан?'})
+  @Column({type: DataType.BOOLEAN, defaultValue: false})
+  declare passed: boolean;
 
   @ApiProperty({example: 'true', description: 'Признак посещаемости'})
   @Column({type: DataType.BOOLEAN})

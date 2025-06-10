@@ -11,7 +11,7 @@ export class AuthController {
 
   @Post('/admin-login')
   adminLogin(@Body() body: {password: string}){
-    return this.authService.adminLogin(body);
+    return this.authService.adminLogin(body.password);
   }
 
   @Post('/login')

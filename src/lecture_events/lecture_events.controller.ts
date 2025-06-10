@@ -31,6 +31,11 @@ export class LectureEventsController {
     return this.lectureEventsService.getLectureEventsByTeacher(id);
   } 
 
+  @Patch(':id/status')
+  async updateStatus(@Param('id') id: number, @Body() body: {status: string}) {
+    return this.lectureEventsService.updateLectureEventStatus(id, body.status);
+  }
+
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.lectureEventsService.delete(id);

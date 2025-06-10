@@ -7,7 +7,6 @@ interface TestEventCreationAttrs{
   date: string
   time: string
   groupId: number
-  // testId: number
 }
 
 @Table({tableName: 'test_events', updatedAt: false, createdAt: false})
@@ -30,21 +29,18 @@ export class TestEvent extends Model<TestEvent, TestEventCreationAttrs>{
   @Column({type: DataType.INTEGER, allowNull: false})
   declare groupId: number;
 
-  @Column({type: DataType.INTEGER, allowNull: false})
-  declare description: number;
-
   @BelongsTo(() => Group)
   group: Group;
 
-  // @ApiProperty({example: '1', description: 'Идентификатор зачёта'})
-  // @ForeignKey(() => Test)
-  // @Column({type: DataType.INTEGER, allowNull: false})
-  // declare testId: number;
+  @ApiProperty({example: '1', description: 'Идентификатор теста'})
+  @ForeignKey(() => Test)
+  @Column({type: DataType.INTEGER, allowNull: false})
+  declare testId: number;
+
+  @BelongsTo(() => Test)
+  test: Test;
 
   @ApiProperty({example: 'В будущем', description: 'Статус зачёта'})
   @Column({type: DataType.STRING, defaultValue: 'В будущем'})
   declare status: string;
-
-  // @BelongsTo(() => Test)
-  // test: Test;
 }

@@ -31,6 +31,11 @@ export class TestEventsController {
     return this.testEventsService.getTestEventsByTeacher(id);
   }
 
+  @Patch(':id/status')
+  async updateStatus(@Param('id') id: number, @Body() body: {status: string}) {
+    return this.testEventsService.updateTestEventStatus(id, body.status);
+  }
+
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.testEventsService.deleteTestEvent(id);

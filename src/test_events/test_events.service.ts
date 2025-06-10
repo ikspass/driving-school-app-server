@@ -1,12 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateTestEventDto } from './dto/create-test_event.dto';
 import { UpdateTestLessonDto } from './dto/update-test_event.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { TestEvent } from './test_events.model';
 import { Group } from 'src/groups/groups.model';
-import { Test } from 'src/tests/tests.model';
 import { GroupsService } from 'src/groups/groups.service';
 import { Op } from 'sequelize';
+import { Student } from 'src/students/students.model';
+import { User } from 'src/users/users.model';
+import { Test } from 'src/tests/tests.model';
 
 @Injectable()
 export class TestEventsService {
@@ -28,7 +30,7 @@ export class TestEventsService {
       ],
       include:[
         {model: Group},
-        // {model: Test},
+        {model: Test}
       ]
     });
     return testEvents;
@@ -45,7 +47,7 @@ export class TestEventsService {
       ],
       include:[
         {model: Group},
-        // {model: Test}
+        {model: Test}
       ]
     });
     return testEvents;
@@ -54,23 +56,23 @@ export class TestEventsService {
   async getTestEventsById(id: number) {
     const testEvents = await this.testEventRepository.findByPk(id, {
       include:[
-        {model: Group},
-        // {model: Test}
+        {model: Group, include: [{model: Student, include: [User]}]},
+        {model: Test}
       ]
     });
     return testEvents;
   }
 
   async getTestEventsByTeacher(teacherId: number) {
-    const groups = await this.groupService.getGroupsByTeacher(teacherId); // Предполагается, что метод возвращает массив групп
+    const groups = await this.groupService.getGroupsByTeacher(teacherId);
     console.log('groups: ', groups)
     if(groups){
-      const groupIds = groups?.map(group => group.id); // Извлекаем идентификаторы групп
+      const groupIds = groups?.map(group => group.id);
   
       const testEvents = await this.testEventRepository.findAll({
           where: {
               groupId: {
-                  [Op.in]: groupIds, // Используем оператор Op.in для фильтрации по массиву groupIds
+                  [Op.in]: groupIds,
               },
           },
           order: [
@@ -79,13 +81,25 @@ export class TestEventsService {
           ],
           include: [
               { model: Group },
-              // { model: Test }
+              {model: Test}
           ]
       });
   
       return testEvents;
     }
     return []
+  }
+
+  async updateTestEventStatus(eventId: number, status: string){
+    const event = await this.testEventRepository.findByPk(eventId);
+    if(!event){
+      throw new HttpException('Событие не найдено', HttpStatus.NOT_FOUND)
+    }
+
+    event.status = status;
+    await event.save();
+
+    return event;
   }
 
   async deleteTestEvent(id: string) {

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMessageDto } from './dto/create-message.dto';
-import { UpdateMessageDto } from './dto/update-message.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Message } from './messages.model';
 
@@ -19,7 +18,7 @@ export class MessagesService {
   }
 
   async getMessagesByGroup(groupId: number) {
-    const messages = await this.messageRepository.findAll({where: {groupId}, include:{all: true}});
+    const messages = await this.messageRepository.findAll({where: {groupId}});
     return messages;
   }
 

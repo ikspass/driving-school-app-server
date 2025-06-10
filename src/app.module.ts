@@ -6,11 +6,9 @@ import { InstructorsModule } from './instructors/instructors.module';
 import { GroupsModule } from './groups/groups.module';
 import { TeachersModule } from './teachers/teachers.module';
 import { CategoriesModule } from './categories/categories.module';
-import { QualsModule } from './quals/quals.module';
 import { Student } from './students/students.model';
 import { Instructor } from './instructors/instructors.model';
 import { Teacher } from './teachers/teachers.model';
-import { Qual } from './quals/quals.model';
 import { Group } from './groups/groups.model';
 import { Category } from './categories/categories.model';
 import { AuthModule } from './auth/auth.module';
@@ -22,15 +20,11 @@ import { LectureEventsModule } from './lecture_events/lecture_events.module';
 import { DrivingPlacesModule } from './driving_places/driving_places.module';
 import { DrivingEventsModule } from './driving_events/driving_events.module';
 import { TestLessonsModule } from './test_events/test_events.module';
-import { TestsModule } from './tests/tests.module';
 import { DrivingEvent } from './driving_events/driving_events.model';
 import { DrivingPlace } from './driving_places/driving_places.model';
 import { LectureEvent } from './lecture_events/lecture_events.model';
 import { TestEvent } from './test_events/test_events.model';
-import { Test } from './tests/tests.model';
-import { TeacherQuals } from './teacher_quals/teacher_quals.model';
 import { StudentLecture } from './student_lectures/student_lectures.model';
-import { TestResult } from './test_results/test_results.model';
 import { InstructorCategory } from './instructor_categories/instructor_categories.model';
 import { MessagesModule } from './messages/messages.module';
 import { Message } from './messages/messages.model';
@@ -39,12 +33,12 @@ import { Transport } from './transports/transports.model';
 import { ScheduleGroupsModule } from './schedule_groups/schedule_groups.module';
 import { ScheduleGroup } from './schedule_groups/schedule_groups.model';
 import { InstructorCategoriesModule } from './instructor_categories/instructor_categories.module';
-import { TeacherQualsModule } from './teacher_quals/teacher_quals.module';
-import { TestResultsModule } from './test_results/test_results.module';
 import { StudentLecturesModule } from './student_lectures/student_lectures.module';
 import { StudentTestsModule } from './student_tests/student_tests.module';
 import { StudentTest } from './student_tests/student_tests.model';
 import pg from 'pg'
+import { TestsModule } from './tests/tests.module';
+import { Test } from './tests/tests.model'
 
 @Module({
   imports: [
@@ -66,19 +60,16 @@ import pg from 'pg'
         Instructor,
         InstructorCategory,
         LectureEvent,
-        Qual,
         Role,
         Student,
         StudentTest,
         Teacher,
-        TeacherQuals,
         TestEvent,
-        TestResult,
-        Test,
         User,
         Message,
         ScheduleGroup,
-        StudentLecture
+        StudentLecture,
+        Test
       ],
       autoLoadModels: true,
       dialectOptions: {
@@ -95,22 +86,19 @@ import pg from 'pg'
     TeachersModule,
     TransportsModule,
     CategoriesModule,
-    QualsModule,
     AuthModule,
     UsersModule,
     RolesModule,
     LectureEventsModule,
-    TestsModule,
     TestLessonsModule,
     DrivingEventsModule,
     DrivingPlacesModule,
     MessagesModule,
     ScheduleGroupsModule,
     InstructorCategoriesModule,
-    TeacherQualsModule,
-    TestResultsModule,
     StudentTestsModule,
     StudentLecturesModule,
+    TestsModule
   ],
   controllers: [],
   providers: [],

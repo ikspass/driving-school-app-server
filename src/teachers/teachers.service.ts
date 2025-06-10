@@ -2,29 +2,20 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Teacher } from './teachers.model';
-import { QualsService } from 'src/quals/quals.service';
-import { Qual } from 'src/quals/quals.model';
 import { Group } from 'src/groups/groups.model';
 import { Category } from 'src/categories/categories.model';
 import { User } from 'src/users/users.model';
+import { ScheduleGroup } from 'src/schedule_groups/schedule_groups.model';
 
 @Injectable()
 export class TeachersService {
 
   constructor(@InjectModel(Teacher) 
     private teacherRepository: typeof Teacher,
-    private qualService: QualsService
   ){}
 
-  async createTeacher(dto: CreateTeacherDto, quals: Qual[]) {
+  async createTeacher(dto: CreateTeacherDto) {
     const teacher = await this.teacherRepository.create(dto);
-    if (quals && quals.length > 0) {
-      // Извлекаем только идентификаторы квалификаций
-      const qualIds = quals.map(qual => qual.description);
-      await teacher.$set('quals', qualIds);
-    } else {
-      console.warn('Квалификации не найдены для установки');
-    }
     return teacher;
   }
 
@@ -33,7 +24,6 @@ export class TeachersService {
       order: [['id', 'ASC']],
       include:[
         {model: Group, include: [{model: Category}]},
-        {model: Qual},
         {model: User}
       ]
     });
@@ -43,8 +33,7 @@ export class TeachersService {
   async getTeacherById(id: number) {
     const teacher = await this.teacherRepository.findByPk(id, {
       include:[
-        {model: Group, include: [{model: Category}]},
-        {model: Qual},
+        {model: Group, include: [Category, ScheduleGroup]},
         {model: User}
       ]
     });

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateLectureEventDto } from './dto/create-lecture_event.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { LectureEvent } from './lecture_events.model';
@@ -25,8 +25,8 @@ export class LectureEventsService {
     const lectureEvent = await this.lectureEventRepository.findByPk(id, {
       include:[
         {model: Teacher, include: [User]},
-        {model: Group},
-        {model: Student},
+        {model: Group, include: [{model: Student, include: [User]}]},
+        {model: Student, include: [User]},
         {model: StudentLecture}
       ]
     });
@@ -77,6 +77,18 @@ export class LectureEventsService {
       ]
     });
     return lectureEvents;
+  }
+
+  async updateLectureEventStatus(eventId: number, status: string){
+    const event = await this.lectureEventRepository.findByPk(eventId);
+    if(!event){
+      throw new HttpException('Событие не найдено', HttpStatus.NOT_FOUND)
+    }
+
+    event.status = status;
+    await event.save();
+
+    return event;
   }
 
   async delete(id: string) {

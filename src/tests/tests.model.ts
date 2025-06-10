@@ -1,6 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
-import { TestResult } from "../test_results/test_results.model";
 
 interface TestCreationAttrs {
   name: string;
@@ -21,7 +20,4 @@ export class Test extends Model<Test, TestCreationAttrs> {
   @ApiProperty({ example: 'Зачёт по теории', description: 'Описание зачёта' })
   @Column({ type: DataType.STRING, allowNull: false })
   declare description: string;
-
-  @HasMany(() => TestResult)
-  testResults: TestResult[];
 }

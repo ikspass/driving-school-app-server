@@ -52,7 +52,7 @@ export class GroupsService {
 
   async getAllGroups() {
     return this.groupRepository.findAll({
-      order: [['id', 'ASC']],
+      order: [['name', 'ASC']],
       include: [
         { model: Category },
         { model: ScheduleGroup },
@@ -86,7 +86,7 @@ export class GroupsService {
     const student = await this.studentRepository.findByPk(studentId, {
       include: [{ model: Group }],
     });
-    return student ? student.group : null;
+    return student ? student.getDataValue('group') : null;
   }
 
   async getGroupsByTeacher(teacherId: number) {

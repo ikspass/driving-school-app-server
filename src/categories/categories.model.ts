@@ -3,7 +3,6 @@ import { BelongsToMany, Column, DataType, HasMany, Model, Table } from "sequeliz
 import { Group } from "src/groups/groups.model";
 import { InstructorCategory } from "../instructor_categories/instructor_categories.model";
 import { Instructor } from "src/instructors/instructors.model";
-import { Test } from "src/tests/tests.model";
 import { Student } from "src/students/students.model";
 
 interface CategoryCreationAttrs{

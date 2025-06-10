@@ -47,11 +47,6 @@ export class StudentsController {
     return this.studentsService.getStudentsByTeacher(teacherId);
   }
 
-  @Get('group/not')
-  async getStudentsWithoutGroup() {
-    return this.studentsService.getStudentsWithoutGroup();
-  }
-
   @ApiOperation({summary: 'Изменить статус курсанта'})
   @ApiResponse({status: 200, type: Student})
   @Patch(':id/status')

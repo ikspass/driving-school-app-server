@@ -21,7 +21,7 @@ export class StudentLecture extends Model<StudentLecture, StudentLectureCreation
   @Column({type: DataType.INTEGER, allowNull: false})
   declare studentId: number;
 
-  @BelongsTo(() => Student, {as: 'studentLectureStudentInfo'})
+  @BelongsTo(() => Student)
   student: Student;
 
   @ApiProperty({example: '1', description: 'Идентификатор лекции'})

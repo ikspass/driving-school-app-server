@@ -54,9 +54,6 @@ export class Group extends Model<Group, GroupCreationAttrs>{
   @BelongsTo(() => ScheduleGroup)
   scheduleGroup: ScheduleGroup;
 
-  @Column({type: DataType.STRING, defaultValue: 'Активна', allowNull: false})
-  declare status: string;
-
   @HasMany(() => Student)
   students: Student[];
 

@@ -32,6 +32,11 @@ export class DrivingEventsController {
     return this.drivingEventsService.getDrivingEventById(id);
   }
 
+  @Patch(':id/status')
+  async updateStatus(@Param('id') id: number, @Body() body: {status: string}) {
+    return this.drivingEventsService.updateDrivingEventStatus(id, body.status);
+  }
+
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.drivingEventsService.delete(id);

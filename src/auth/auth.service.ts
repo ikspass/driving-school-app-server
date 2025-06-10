@@ -21,9 +21,9 @@ export class AuthService {
     private instructorService: InstructorsService
   ){}
 
-  async adminLogin(body: {password: string}){
+  async adminLogin(password: string){
     const adminPassword = process.env.ADMIN_PASSWORD;
-    if (body.password === adminPassword) {
+    if (password === adminPassword) {
       const payload = { role: { id: 0, value: 'admin', description: 'Администратор'} }; 
       return {
         token: this.jwtService.sign(payload)
@@ -46,24 +46,25 @@ export class AuthService {
         if(dto.password.length >= 8 && dto.password.length <= 20){
           const hashPassword = await bcrypt.hash(dto.password, 5);
           candidate.setDataValue('password', hashPassword);
-      
-          if (candidate.student) {
-            await this.studentService.updateStudentStatus(candidate.student.id, 'Активен');
+          
+          console.log('candidate: ', candidate)
+          if (candidate.getDataValue('student')) {
+            await this.studentService.updateStudentStatus(candidate.getDataValue('student').getDataValue('id'), 'Активен');
           } else {
             console.log('Student is undefined');
           }
     
            // Check teacher
-          if (candidate.teacher) {
+          if (candidate.getDataValue('teacher')) {
             console.log('Updating teacher status:', candidate.teacher.id);
-            await this.teacherService.updateTeacherStatus(candidate.teacher.id, 'Активен');
+            await this.teacherService.updateTeacherStatus(candidate.getDataValue('teacher').getDataValue('id'), 'Активен');
             console.log('Teacher status updated to Активен');
           } else {
             console.log('Teacher is undefined');
           }
     
-          if (candidate.instructor) {
-            await this.instructorService.updateInstructorStatus(candidate.instructor.id, 'Активен');
+          if (candidate.getDataValue('instructor')) {
+            await this.instructorService.updateInstructorStatus(candidate.getDataValue('instructor').getDataValue('id'), 'Активен');
           } else {
             console.log('Instructor is undefined');
           }

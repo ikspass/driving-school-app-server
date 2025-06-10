@@ -16,6 +16,21 @@ export class StudentLecturesController {
     return this.studentLecturesService.findAll();
   }
 
+  @Get('lecture/:id')
+  findByLectureId(@Param('id') id: number) {
+    return this.studentLecturesService.findByLectureId(id);
+  }
+
+  @Get('student/:id')
+  findByStudentId(@Param('id') id: number) {
+    return this.studentLecturesService.findByStudentId(id);
+  }
+
+  @Patch('student/:studentId/lecture/:lectureId')
+  updateStudentLectureAbsent(@Param('studentId') studentId: number, @Param('lectureId') lectureId: number) {
+    return this.studentLecturesService.updateStudentLecture(lectureId, studentId);
+  }
+
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.studentLecturesService.delete(id);

@@ -2,8 +2,6 @@ import { ApiProperty } from "@nestjs/swagger";
 import { BelongsTo, BelongsToMany, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { Group } from "src/groups/groups.model";
 import { LectureEvent } from "src/lecture_events/lecture_events.model";
-import { Qual } from "src/quals/quals.model";
-import { TeacherQuals } from "src/teacher_quals/teacher_quals.model";
 import { User } from "src/users/users.model";
 
 interface TeacherCreateAttrs{
@@ -33,9 +31,6 @@ export class Teacher extends Model<Teacher, TeacherCreateAttrs>{
   @ApiProperty({example: 'В отпуске', description: 'Статус'})
   @Column({type: DataType.STRING, defaultValue: 'Не активен', allowNull: false})
   declare status: string;
-
-  @BelongsToMany(() => Qual, () => TeacherQuals)
-  quals: Qual[];
 
   @HasMany(() => Group)
   groups: Group[];

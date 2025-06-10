@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -10,6 +10,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { extname } from 'path';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @ApiTags('Пользователи')
 @Controller('users')
@@ -29,11 +30,20 @@ export class UsersController {
       },
     }),
   }))
+
   async createUser(@UploadedFile() file: Express.Multer.File, @Body() dto: CreateUserDto) {
     if (file) {
       dto.img = file.filename; // Сохраняем путь к изображению
     }
     return await this.userService.createUser(dto);
+  }
+
+  @Put(':id')
+  async updateUser(
+    @Param('id') id: number,
+    @Body() dto: UpdateUserDto,
+  ){
+    return this.userService.updateUser(id, dto);
   }
 
   @ApiOperation({summary: 'Получение всех пользователей'})
