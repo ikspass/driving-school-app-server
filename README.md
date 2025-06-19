@@ -28,6 +28,3 @@ npm run start
 
 ## Технологии
 TypeScript, NestJS, PostgreSQL
-
-## Контакты
-Если у вас есть вопросы, вы можете связаться с нами по адресу: polyrychkova@gmail.com
